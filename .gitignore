@@ -1,0 +1,34 @@
+# ignore special files or folds
+*~
+.idea
+.DS_Store
+
+# ignore all building results
+dist
+build
+docs/_build
+*.egg-info‹
+*.out
+*.log
+
+# ignore all testing/running results
+.run
+.coverage
+.pytest_cache
+*__pycache__*
+*test*
+
+# ignore specific kinds of files like all PDFs‹
+*.pdf
+*.ipynb
+*TODO*
+
+# ignore executable and config files‹
+#*.sh
+*.yml
+
+# to temporally ignore things under development locally, simply append '_indev' to the name of your workdir
+*_indev*
+
+output/
+datasets/
