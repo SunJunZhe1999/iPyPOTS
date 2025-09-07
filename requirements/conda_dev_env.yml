@@ -1,0 +1,49 @@
+name: pypots-dev
+
+channels:
+    - conda-forge
+    - pytorch
+    - pyg
+    - nodefaults
+
+dependencies:
+    ## Below we install the latest pypots because we need pypots-cli in it for development.
+    - conda-forge::python >=3.8
+    - conda-forge::pip
+    - conda-forge::pypots >=1.0
+
+    # optional
+    ## for GNNs in PyPOTS, e.g., Raindrop
+    - pyg::pyg
+    - pyg::pytorch-sparse
+    - pyg::pytorch-scatter
+    ## for some LLM-based models in PyPOTS, e.g. LLaMA-based TimeLLM, LLM4Imp
+    - conda-forge::sentencepiece
+    - conda-forge::tokenizers
+    - conda-forge::datasets
+
+    # test
+    - conda-forge::coveralls
+    - conda-forge::pytest-cov
+    - conda-forge::pytest-xdist
+
+    # doc
+    - conda-forge::furo
+    - conda-forge::sphinx
+    - conda-forge::docutils
+    - conda-forge::sphinxcontrib-bibtex
+    - conda-forge::sphinx-autodoc-typehints
+
+    # dev
+    - conda-forge::black
+    - conda-forge::flake8
+    - conda-forge::flake8-pyproject
+    - conda-forge::pre-commit
+    - conda-forge::jupyterlab
+
+    - pip:
+        # building
+        - build
+        # doc
+        - sphinxcontrib-gtagjs
+        - peft
