@@ -564,3 +564,4 @@ Time-Series.AI</a>
 [^51]: Eldele, E., Ragab, M., Chen, Z., Wu, M., & Li, X. (2024).
 [TSLANet: Rethinking Transformers for Time Series Representation Learning](https://proceedings.mlr.press/v235/eldele24a.html).
 *ICML 2024*.# iPyPOTS
+# iPyPOTS
