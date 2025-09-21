@@ -1,4 +1,4 @@
-# Research Proposal  
+# Research Proposal - M2 
 **Uncertainty-Aware Time-Series Imputation for Irregular Medical Data**
 
 ---
