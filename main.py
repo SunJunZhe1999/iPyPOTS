@@ -24,7 +24,6 @@ from pipeline.imputations.tefn import train_and_evaluate_tefn
 from pipeline.imputations.tslanet import train_and_evaluate_tslanet
 from pipeline.imputations.gpt4ts import train_and_evaluate_gpt4ts
 from pipeline.imputations.timemixerpp import train_and_evaluate_timemixerpp
-from pipeline.imputations.moment import train_and_evaluate_moment
 
 from pypots.data.dataset.load_prepare_dataset import DatasetPreparator
 from pypots.utils.random import set_random_seed
@@ -40,6 +39,7 @@ MODEL_PIPELINES = {
     "tslanet": train_and_evaluate_tslanet,
     "saits": train_and_evaluate_saits,
     "timemixerpp": train_and_evaluate_timemixerpp,
+    "moment": train_and_evaluate_moment,
 }
 
 
