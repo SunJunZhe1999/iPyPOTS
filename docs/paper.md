@@ -78,3 +78,8 @@ We propose the **first uncertainty-aware imputation framework** for irregular me
 
 ## 🔑 One-Sentence Pitch
 **We go beyond imputing missing values: we make imputation *trustworthy* by quantifying uncertainty in medical time series, enabling safer AI for healthcare.**
+
+
+
+# Links:
+1. https://eshban9492.medium.com/understanding-evaluation-metrics-for-time-series-forecasting-5c8a3c877654

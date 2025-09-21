@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source ~/.bashrc
 hostname
 
 # ==================== GPU SELECTION (Template Style) ====================
@@ -137,9 +136,9 @@ for DATASET in "${DATASETS[@]}"; do
                   echo "================================" >> "${RUN_LOG}"
 
                   if command -v srun &>/dev/null; then
-                    srun --quiet --unbuffered "${cmd[@]}" |& tee -a "${RUN_LOG}"
+                    srun --quiet --unbuffered "${cmd[@]}" 2>&1 | tee -a "${RUN_LOG}"
                   else
-                    "${cmd[@]}" |& tee -a "${RUN_LOG}"
+                    "${cmd[@]}" 2>&1 | tee -a "${RUN_LOG}"
                   fi
                 }
 

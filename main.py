@@ -17,14 +17,12 @@ import os
 import json
 
 from argument_parser import get_args
-from pipeline.imputations.llm4imp import train_and_evaluate_llm4imp
 from pipeline.imputations.saits import train_and_evaluate_saits
 from pipeline.imputations.timellm import train_and_evaluate_timellm
 from pipeline.imputations.moment import train_and_evaluate_moment
 from pipeline.imputations.tefn import train_and_evaluate_tefn
 from pipeline.imputations.tslanet import train_and_evaluate_tslanet
 from pipeline.imputations.gpt4ts import train_and_evaluate_gpt4ts
-from pipeline.imputations.llmsaits import train_and_evaluate_llmsaits
 from pipeline.imputations.timemixerpp import train_and_evaluate_timemixerpp
 from pipeline.imputations.moment import train_and_evaluate_moment
 
@@ -33,8 +31,6 @@ from pypots.utils.random import set_random_seed
 
 MODEL_PIPELINES = {
     # LLM (Large Language Model)
-    "llm4imp": train_and_evaluate_llm4imp,
-    "llmsaits": train_and_evaluate_llmsaits,
     "timellm": train_and_evaluate_timellm,
     "gpt4ts": train_and_evaluate_gpt4ts,
     # TSFM (Time-Series Foundation Model)
