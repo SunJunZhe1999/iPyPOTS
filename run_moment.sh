@@ -1,67 +1,220 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -Eeuo pipefail
+# ==================== Python interpreter selection (macOS/Linux compatible) ====================
+PYTHON_BIN="${PYTHON_BIN:-}"
+if [[ -z "${PYTHON_BIN}" ]]; then
+  if command -v python &>/dev/null; then
+    PYTHON_BIN="python"
+  elif command -v python3 &>/dev/null; then
+    PYTHON_BIN="python3"
+  else
+    echo "❌ Neither 'python' nor 'python3' found in PATH. Please install Python 3.8+ or set PYTHON_BIN."
+    exit 1
+  fi
+fi
 
+# ==================== System info ====================
 hostname
 
-# ==================== GPU SELECTION (Template Style) ====================
-# 1) Expose only GPUs you're allowed to see (physical indices)
-export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+# ==================== GPU SELECTION (Portable) ====================
+# 1) Choose GPUs by *logical* indices ("" → CPU). Default to GPU 0 if available.
+USE_GPUS="${USE_GPUS:-0}"    # e.g., "0", "0,1", or "" for CPU
 
-# 2) Choose a subset of the visible GPUs by *logical* indices ("" → CPU)
-USE_GPUS="1"        # e.g., "0" or "0,1"; set "" to force CPU
-
-# 3) Build DEVICE list and BACKEND tag
+# 2) Build DEVICE list and BACKEND tag without overriding CUDA_VISIBLE_DEVICES
 DEVICE=()
 BACKEND="cpu"
-if command -v nvidia-smi &>/dev/null && [[ -n "$CUDA_VISIBLE_DEVICES" ]] && [[ -n "$USE_GPUS" ]]; then
-  IFS=',' read -ra SEL <<< "$USE_GPUS"
-  for lg in "${SEL[@]}"; do DEVICE+=("cuda:${lg}"); done
-  BACKEND="cuda"
+if command -v nvidia-smi &>/dev/null && [[ -n "${USE_GPUS}" ]]; then
+  IFS=',' read -ra SEL <<< "${USE_GPUS}"
+  for lg in "${SEL[@]}"; do
+    if [[ "${lg}" =~ ^[0-9]+$ ]]; then DEVICE+=("cuda:${lg}"); fi
+  done
+  if [[ ${#DEVICE[@]} -gt 0 ]]; then BACKEND="cuda"; fi
 fi
+
+# If no GPU selected/available, fallback to CPU
 if [[ ${#DEVICE[@]} -eq 0 ]]; then DEVICE=("cpu"); BACKEND="cpu"; fi
 
-echo "Visible GPUs: ${CUDA_VISIBLE_DEVICES}"
-echo "Using devices: ${DEVICE[*]}"
+echo "Using devices: ${DEVICE[*]}  | backend=${BACKEND}"
+echo "USE_GPUS=${USE_GPUS} (set USE_GPUS=\"\" to force CPU, or \"0,1\" for multi-GPU)"
 
-# ==================== ENV ====================
-ENV_NAME="pypots"
-if [[ -z "$CONDA_DEFAULT_ENV" || "$CONDA_DEFAULT_ENV" != "$ENV_NAME" ]]; then
-  if ! command -v conda &>/dev/null; then echo "❌ Conda not found."; exit 1; fi
-  source activate "$ENV_NAME" || { echo "❌ Could not activate Conda env '$ENV_NAME'."; exit 1; }
+# ==================== Conda ENV (robust activation) ====================
+ENV_NAME="${ENV_NAME:-pypots}"
+if [[ -z "${CONDA_DEFAULT_ENV:-}" || "${CONDA_DEFAULT_ENV}" != "${ENV_NAME}" ]]; then
+  if command -v conda &>/dev/null; then
+    # Prefer the modern shell hook
+    if conda shell.bash hook &>/dev/null; then
+      eval "$(conda shell.bash hook)"
+      conda activate "${ENV_NAME}" || { echo "❌ Could not activate Conda env '${ENV_NAME}'."; exit 1; }
+    else
+      # Fallback to common install paths
+      if [[ -r "${HOME}/miniconda3/etc/profile.d/conda.sh" ]]; then
+        # shellcheck source=/dev/null
+        source "${HOME}/miniconda3/etc/profile.d/conda.sh"
+        conda activate "${ENV_NAME}" || { echo "❌ Could not activate Conda env '${ENV_NAME}'."; exit 1; }
+      else
+        echo "⚠️  Conda found but shell hook not available; continuing without activation."
+      fi
+    fi
+  else
+    echo "⚠️  Conda not found; continuing with current Python environment."
+  fi
 fi
 
 # ==================== EXPERIMENT CONFIGS ====================
-MODEL="moment"
+MODEL="${MODEL:-moment}"
 
-DATASETS=("physionet_2012") # "beijing_multisite_air_quality" "italy_air_quality" "pems_traffic" "solar_alabama")
-MISSING_RATES=("0.3") #("0.1" "0.2" "0.3" "0.4" "0.5")
-BATCH_SIZES=("32")
-D_MODELS=("32")
-D_FFNS=("32")
-N_HEADS=("1")
-N_LAYERS=("1")
+# Allow overriding dataset/missing-rate grids via env, e.g. DATASETS_OVERRIDE="physionet_2012,ettm1"
+declare -a DATASETS
+if [[ -n "${DATASETS_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra DATASETS <<< "${DATASETS_OVERRIDE}"
+else
+  DATASETS=("physionet_2012")
+fi
 
-ENABLE_PROFILING_VALUES=("true")
-
-# Paths (device-aware)
-ROOT_OUT="output/imputation/${BACKEND}"
-PROFILING_PATH="${ROOT_OUT}/profiling"
-PROFILING_PREFIX="backbone_saits"
-mkdir -p "${ROOT_OUT}" "${PROFILING_PATH}"
-
-# Fixed
-EPOCH=15
-PATIENCE=5
-
-# Session log
-SESSION_TAG="$(date +%Y%m%dT%H%M%S)"
-SESSION_LOG="${ROOT_OUT}/session_${MODEL}_${SESSION_TAG}.log"
-echo "Session log: ${SESSION_LOG}" | tee -a "${SESSION_LOG}"
-
-# ==================== Helper: dataset dims ====================
-set_dims_for_dataset () {
+# NOTE: d_k / d_v only used in specific transformer configs, guarded below
+function set_hyperparams_for_dataset() {
   local ds="$1"
   case "$ds" in
-    "physionet_2012") N_STEPS=48;  N_FEATURES=35 ;;
+    "physionet_2012")
+      D_MODEL=512
+      D_FFN=1024
+      N_HEAD=8
+      N_LAYER=4
+      BATCH_SIZE=16
+      EPOCH=100
+      PATIENCE=20
+      ;;
+    *)
+      D_MODEL=512
+      D_FFN=1024
+      N_HEAD=8
+      N_LAYER=4
+      BATCH_SIZE=16
+      EPOCH=100
+      PATIENCE=20
+      ;;
+  esac
+}
+
+# Missing rate grid
+declare -a MISSING_RATES
+if [[ -n "${MISSING_RATES_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra MISSING_RATES <<< "${MISSING_RATES_OVERRIDE}"
+else
+  MISSING_RATES=("0.1" "0.2")
+fi
+
+# Model sweep knobs (patch size/backbones/transformer types/d_k/d_v)
+declare -a PATCH_SIZES
+if [[ -n "${PATCH_SIZES_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra PATCH_SIZES <<< "${PATCH_SIZES_OVERRIDE}"
+else
+  PATCH_SIZES=(8)
+fi
+
+declare -a TRANSFORMER_BACKBONES
+if [[ -n "${TRANSFORMER_BACKBONES_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra TRANSFORMER_BACKBONES <<< "${TRANSFORMER_BACKBONES_OVERRIDE}"
+else
+  TRANSFORMER_BACKBONES=("t5-small")
+fi
+
+declare -a TRANSFORMER_TYPES
+if [[ -n "${TRANSFORMER_TYPES_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra TRANSFORMER_TYPES <<< "${TRANSFORMER_TYPES_OVERRIDE}"
+else
+  TRANSFORMER_TYPES=("encoder_decoder")
+fi
+
+declare -a D_K_VALUES
+if [[ -n "${D_K_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra D_K_VALUES <<< "${D_K_OVERRIDE}"
+else
+  D_K_VALUES=(64)
+fi
+
+declare -a D_V_VALUES
+if [[ -n "${D_V_OVERRIDE:-}" ]]; then
+  IFS=',' read -ra D_V_VALUES <<< "${D_V_OVERRIDE}"
+else
+  D_V_VALUES=(64)
+fi
+
+# Root output path (align with imputation layout)
+ROOT_OUT="${ROOT_OUT:-./output/imputation/${BACKEND}}"
+mkdir -p "${ROOT_OUT}"
+
+# Profiling
+ENABLE_PROFILING="${ENABLE_PROFILING:-false}"
+PROFILING_PATH="${PROFILING_PATH:-${ROOT_OUT}/profiling}"
+PROFILING_PREFIX="${PROFILING_PREFIX:-moment}"
+
+
+# ==================== CPU-friendly defaults ====================
+if [[ "${BACKEND}" == "cpu" ]]; then
+  auto_fast_dev=0
+  if [[ -z "${FAST_DEV_RUN:-}" ]]; then
+    FAST_DEV_RUN="auto"
+    auto_fast_dev=1
+    echo "⚠️ 检测到 CPU 后端，自动开启 FAST_DEV_RUN（若需完整训练请设置 FAST_DEV_RUN=0）。"
+  fi
+  if [[ ${auto_fast_dev} -eq 1 && -z "${TRAIN_SUBSET:-}" ]]; then
+    TRAIN_SUBSET="64"
+    echo "⚠️ 使用 TRAIN_SUBSET=64 加速调试（设置 TRAIN_SUBSET=all 覆盖此行为）。"
+  fi
+  if [[ ${auto_fast_dev} -eq 1 && -z "${EPOCH_OVERRIDE:-}" ]]; then
+    EPOCH_OVERRIDE=1
+  fi
+  if [[ ${auto_fast_dev} -eq 1 && -z "${PATIENCE_OVERRIDE:-}" ]]; then
+    PATIENCE_OVERRIDE=1
+  fi
+fi
+
+# ==================== Path and script targets ====================
+# Auto-detect main entry: prefer ./main.py, fallback to ./script/main.py, or respect MAIN_PY if provided
+if [[ -z "${MAIN_PY:-}" ]]; then
+  if [[ -f "./main.py" ]]; then
+    MAIN_PY="./main.py"
+  elif [[ -f "./script/main.py" ]]; then
+    MAIN_PY="./script/main.py"
+  else
+    echo "❌ Could not find main.py. Tried ./main.py and ./script/main.py. You can also run: MAIN_PY=/path/to/main.py ./run_moment.sh"
+    exit 1
+  fi
+fi
+echo "MAIN_PY=${MAIN_PY}"
+
+SESSION_LOG="./output/run_moment_session.log"
+mkdir -p "$(dirname "${SESSION_LOG}")"
+
+# ==================== CLI Introspection helpers ====================
+
+# Detect whether --device is a 'store_true' nargs style or single string
+#  - We check parser for nargs in add_argument('--device', ...)
+device_arg_style="single"
+if [[ -f "${MAIN_PY}" ]] && grep -Eq "add_argument\(([^)]*['\"]--device['\"]).*nargs" "${MAIN_PY}"; then
+  device_arg_style="multi"
+fi
+
+# Detect whether CLI supports --d_k and --d_v
+accepts_dk=1
+accepts_dv=1
+if [[ -f "${MAIN_PY}" ]]; then
+  if grep -q -- "--d_k" "${MAIN_PY}"; then accepts_dk=0; fi
+  if grep -q -- "--d_v" "${MAIN_PY}"; then accepts_dv=0; fi
+fi
+
+# Detect whether --enable_profiling is a store_true flag
+enable_prof_is_flag=""
+if [[ -f "${MAIN_PY}" ]] && grep -Eq "add_argument\(([^)]*['\"]--enable_profiling['\"]).*action=['\"]store_true" "${MAIN_PY}"; then
+  enable_prof_is_flag="true"
+fi
+
+# ==================== Utility: default dimensions per dataset ====================
+function set_dims_for_dataset() {
+  local ds="$1"
+  case "$ds" in
+    "physionet_2012") N_STEPS=48;  N_FEATURES=37 ;;
     "etth1"|"etth2"|"ettm1"|"ettm2") N_STEPS=96;  N_FEATURES=7  ;;
     "air_quality"|"beijing_multisite_air_quality"|"italy_air_quality") N_STEPS=48; N_FEATURES=36 ;;
     "pems_traffic")   N_STEPS=96;  N_FEATURES=228 ;;
@@ -77,73 +230,121 @@ set_dims_for_dataset () {
   return 0
 }
 
-# ==================== Main sweep ====================
+# ==================== MAIN GRID ====================
 for DATASET in "${DATASETS[@]}"; do
-  if ! set_dims_for_dataset "$DATASET"; then exit 1; fi
+  set_dims_for_dataset "${DATASET}" || continue
+
+  set_hyperparams_for_dataset "${DATASET}"
+
+  # Allow lightweight experimentation via optional env overrides
+  if [[ -n "${D_MODEL_OVERRIDE:-}" ]]; then D_MODEL="${D_MODEL_OVERRIDE}"; fi
+  if [[ -n "${D_FFN_OVERRIDE:-}" ]]; then D_FFN="${D_FFN_OVERRIDE}"; fi
+  if [[ -n "${N_HEAD_OVERRIDE:-}" ]]; then N_HEAD="${N_HEAD_OVERRIDE}"; fi
+  if [[ -n "${N_LAYER_OVERRIDE:-}" ]]; then N_LAYER="${N_LAYER_OVERRIDE}"; fi
+  if [[ -n "${BATCH_SIZE_OVERRIDE:-}" ]]; then BATCH_SIZE="${BATCH_SIZE_OVERRIDE}"; fi
+  if [[ -n "${EPOCH_OVERRIDE:-}" ]]; then EPOCH="${EPOCH_OVERRIDE}"; fi
+  if [[ -n "${PATIENCE_OVERRIDE:-}" ]]; then PATIENCE="${PATIENCE_OVERRIDE}"; fi
 
   for MISSING_RATE in "${MISSING_RATES[@]}"; do
-    for BATCH_SIZE in "${BATCH_SIZES[@]}"; do
-      for D_MODEL in "${D_MODELS[@]}"; do
-        for D_FFN in "${D_FFNS[@]}"; do
-          for N_HEAD in "${N_HEADS[@]}"; do
-            for N_LAYER in "${N_LAYERS[@]}"; do
-              for ENABLE_PROFILING in "${ENABLE_PROFILING_VALUES[@]}"; do
+    for PATCH_SIZE in "${PATCH_SIZES[@]}"; do
+      PATCH_STRIDE="${PATCH_SIZE}"
+      for TRANS_BACKBONE in "${TRANSFORMER_BACKBONES[@]}"; do
+        for TRANS_TYPE in "${TRANSFORMER_TYPES[@]}"; do
+          for D_K in "${D_K_VALUES[@]}"; do
+            for D_V in "${D_V_VALUES[@]}"; do
 
-                # SAITS requires d_k and d_v (assume divisible)
-                D_K=$(( D_MODEL / N_HEAD ))
-                D_V=$D_K
-
-                SAVE_DIR="${ROOT_OUT}/${MODEL}/${DATASET}/epoch${EPOCH}/mr${MISSING_RATE}_bs${BATCH_SIZE}_dm${D_MODEL}_ffn${D_FFN}_h${N_HEAD}_ly${N_LAYER}_prof${ENABLE_PROFILING}"
+                SAVE_DIR="${ROOT_OUT}/${MODEL}/${DATASET}/mr${MISSING_RATE}"
                 LOG_DIR="${SAVE_DIR}/logs"
                 mkdir -p "${SAVE_DIR}" "${LOG_DIR}"
+                rm -f "${SAVE_DIR}"/*.pypots 2>/dev/null || true
 
                 RUN_TAG="mr${MISSING_RATE}_bs${BATCH_SIZE}_dm${D_MODEL}_ffn${D_FFN}_h${N_HEAD}_ly${N_LAYER}_prof${ENABLE_PROFILING}"
                 RUN_LOG="${LOG_DIR}/run_${RUN_TAG}.log"
                 DONE_MARK="${SAVE_DIR}/.done"
+
+                # Allow force rerun
+                if [[ -n "${FORCE_RERUN:-}" ]]; then rm -f "${DONE_MARK}"; fi
 
                 if [[ -f "${DONE_MARK}" ]]; then
                   echo "⏭️  Skip (done): ${DATASET} | ${RUN_TAG}" | tee -a "${SESSION_LOG}"
                   continue
                 fi
 
-                echo "🔥 RUN: ${MODEL} | ${DATASET} | ${RUN_TAG} (DEVICE=${DEVICE[*]}, N_STEPS=${N_STEPS}, N_FEATURES=${N_FEATURES}, d_k=${D_K}, d_v=${D_V})" | tee -a "${SESSION_LOG}"
+                echo "🔥 RUN: ${MODEL} | ${DATASET} | ${RUN_TAG} (n_steps=${N_STEPS}, n_features=${N_FEATURES}, d_k=${D_K}, d_v=${D_V})" | tee -a "${SESSION_LOG}"
 
-                cmd=(python main.py
+                # build command
+                cmd=(${PYTHON_BIN} "${MAIN_PY}"
                   --model "${MODEL}"
                   --dataset_name "${DATASET}"
                   --epochs "${EPOCH}"
                   --patience "${PATIENCE}"
                   --missing_rate "${MISSING_RATE}"
                   --saving_path "${SAVE_DIR}"
-                  --device "${DEVICE[*]}"
                   --n_steps "${N_STEPS}"
                   --n_features "${N_FEATURES}"
                   --n_layers "${N_LAYER}"
                   --d_model "${D_MODEL}"
                   --d_ffn "${D_FFN}"
                   --n_heads "${N_HEAD}"
-                  --d_k "${D_K}"
-                  --d_v "${D_V}"
                   --batch_size "${BATCH_SIZE}"
-                  --enable_profiling "${ENABLE_PROFILING}"
                   --profiling_path "${PROFILING_PATH}"
                   --profiling_prefix "${PROFILING_PREFIX}"
                 )
 
-                {
-                  echo "===== CMD @ $(date -Is) =====" >> "${RUN_LOG}"
-                  printf '%q ' "${cmd[@]}" >> "${RUN_LOG}"; echo >> "${RUN_LOG}"
-                  echo "================================" >> "${RUN_LOG}"
+                # device passing (multi-arg vs single string)
+                if [[ "${device_arg_style}" == "multi" ]]; then
+                  cmd+=(--device)
+                  for d in "${DEVICE[@]}"; do cmd+=("${d}"); done
+                else
+                  devices_joined="$(IFS=,; echo "${DEVICE[*]}")"
+                  if [[ -z "${devices_joined}" && "${BACKEND}" == "cpu" ]]; then devices_joined="cpu"; fi
+                  cmd+=(--device "${devices_joined}")
+                fi
 
-                  if command -v srun &>/dev/null; then
-                    srun --quiet --unbuffered "${cmd[@]}" 2>&1 | tee -a "${RUN_LOG}"
+                # enable_profiling handling (flag vs value)
+                if [[ "${ENABLE_PROFILING}" == "true" ]]; then
+                  if [[ -n "${enable_prof_is_flag}" ]]; then
+                    cmd+=(--enable_profiling)
                   else
-                    "${cmd[@]}" 2>&1 | tee -a "${RUN_LOG}"
+                    cmd+=(--enable_profiling "true")
                   fi
-                }
+                else
+                  if [[ -z "${enable_prof_is_flag}" ]]; then
+                    cmd+=(--enable_profiling "false")
+                  fi
+                fi
 
+                # only append d_k/d_v if CLI accepts them
+                if [[ "${accepts_dk}" -eq 0 ]]; then cmd+=(--d_k "${D_K}"); fi
+                if [[ "${accepts_dv}" -eq 0 ]]; then cmd+=(--d_v "${D_V}"); fi
+
+                fast_flag="${FAST_DEV_RUN:-}"
+                fast_flag_lower=$(printf '%s' "${fast_flag}" | tr '[:upper:]' '[:lower:]')
+                if [[ "${fast_flag_lower}" == "true" || "${fast_flag_lower}" == "auto" || "${fast_flag}" == "1" ]]; then
+                  cmd+=(--fast_dev_run)
+                fi
+                if [[ -n "${TRAIN_SUBSET:-}" && "${TRAIN_SUBSET}" != "all" && "${TRAIN_SUBSET}" != "ALL" ]]; then
+                  cmd+=(--train_subset "${TRAIN_SUBSET}")
+                fi
+
+                # Other MOMENT-specific args
+                cmd+=(--patch_size "${PATCH_SIZE}")
+                cmd+=(--patch_stride "${PATCH_STRIDE}")
+                cmd+=(--transformer_backbone "${TRANS_BACKBONE}")
+                cmd+=(--transformer_type "${TRANS_TYPE}")
+                cmd+=(--verbose)                                # ← 修正：不再传 "true"
+                cmd+=(--orth_gain "0")
+                cmd+=(--model_saving_strategy "best")
+
+                # run
+                set +e
+                {
+                  "${cmd[@]}" 2>&1 | tee "${RUN_LOG}"
+                }
                 status=${PIPESTATUS[0]}
-                if [[ $status -eq 0 ]]; then
+                set -e
+
+                if [[ ${status} -eq 0 ]]; then
                   touch "${DONE_MARK}"
                   echo "✅ DONE: ${DATASET} | ${RUN_TAG}" | tee -a "${SESSION_LOG}"
                 else
@@ -151,11 +352,10 @@ for DATASET in "${DATASETS[@]}"; do
                 fi
 
               done
-            done
           done
         done
       done
     done
   done
 done
-echo "✅ All ${MODEL} runs completed at $(date -Is)."
+echo "✅ All ${MODEL} runs completed at $(date "+%Y-%m-%dT%H:%M:%S%z")."

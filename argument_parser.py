@@ -114,6 +114,10 @@ def get_args():
     parser.add_argument("--num_workers", type=int, default=0, help="Number of data loading workers")
     parser.add_argument("--model_saving_strategy", type=str, default="best",
                         help="Model saving strategy: None | best | better | all")
+    parser.add_argument("--fast_dev_run", action="store_true",
+                        help="Use a tiny subset of data/epochs for quick debugging.")
+    parser.add_argument("--train_subset", type=int, default=None,
+                        help="Limit number of samples per split for faster experiments.")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose training output")
 
     return parser.parse_args()

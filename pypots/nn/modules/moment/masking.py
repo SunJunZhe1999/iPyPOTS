@@ -37,6 +37,8 @@ class Masking:
         Output
             mask : torch.Tensor of shape [batch_size x n_patches]
         """
+        if mask is None:
+            raise ValueError("mask cannot be None when converting sequence to patch view")
         stride = patch_size if stride is None else stride
         mask = mask.unfold(dimension=-1, size=patch_size, step=stride)
         # mask : [batch_size x n_patches x patch_size]
@@ -46,6 +48,7 @@ class Masking:
     def convert_patch_to_seq_view(
         mask: torch.Tensor,
         patch_size: int = 8,
+        stride: Optional[int] = None,
     ):
         """
         Input:
@@ -53,7 +56,23 @@ class Masking:
         Output:
             mask : torch.Tensor of shape [batch_size x seq_len]
         """
-        return mask.repeat_interleave(patch_size, dim=-1)
+        stride = patch_size if stride is None else stride
+        if stride == patch_size:
+            return mask.repeat_interleave(patch_size, dim=-1)
+
+        batch_size, n_patches = mask.shape
+        seq_len = (n_patches - 1) * stride + patch_size
+        seq_mask = torch.zeros(batch_size, seq_len, device=mask.device, dtype=mask.dtype)
+
+        for patch_idx in range(n_patches):
+            start = patch_idx * stride
+            end = start + patch_size
+            seq_mask[:, start:end] = torch.maximum(
+                seq_mask[:, start:end],
+                mask[:, patch_idx].unsqueeze(-1),
+            )
+
+        return seq_mask
 
     def generate_mask(
         self,
@@ -119,4 +138,4 @@ class Masking:
         """
         x = x.unfold(dimension=-1, size=self.patch_size, step=self.patch_stride)
         mask = self._mask_patch_view(x, input_mask=input_mask)
-        return self.convert_patch_to_seq_view(mask, self.patch_size).long()
+        return self.convert_patch_to_seq_view(mask, self.patch_size, self.patch_stride).long()

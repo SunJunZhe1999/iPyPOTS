@@ -139,6 +139,7 @@ class MOMENT(BaseNNImputer):
         transformer_backbone: str,
         transformer_type: str,
         n_layers: int,
+        n_heads: int,
         d_ffn: int,
         d_model: int,
         dropout: float,
@@ -179,6 +180,7 @@ class MOMENT(BaseNNImputer):
         self.n_features = n_features
         # model hyperparameters
         self.n_layers = n_layers
+        self.n_heads = n_heads
         self.patch_size = patch_size
         self.patch_stride = patch_stride
         self.d_model = d_model
@@ -203,6 +205,8 @@ class MOMENT(BaseNNImputer):
             patch_stride=self.patch_stride,
             d_model=self.d_model,
             d_ffn=self.d_ffn,
+            n_layers=self.n_layers,
+            n_heads=self.n_heads,
             dropout=self.dropout,
             head_dropout=self.head_dropout,
             finetuning_mode=self.finetuning_mode,

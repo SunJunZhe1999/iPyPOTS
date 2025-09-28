@@ -8,9 +8,11 @@
 import warnings
 from argparse import Namespace
 from dataclasses import dataclass
+from typing import Optional
 
 import numpy.typing as npt
 import torch
+import torch.nn.functional as F
 from torch import nn
 
 from .masking import Masking
@@ -124,7 +126,7 @@ class PatchEmbedding(nn.Module):
         self.mask_embedding = nn.Parameter(torch.zeros(d_model))
         # nn.init.trunc_normal_(self.mask_embedding, mean=0.0, std=.02)
 
-        if orth_gain is not None:
+        if orth_gain is not None and orth_gain > 0:
             torch.nn.init.orthogonal_(self.value_embedding.weight, gain=orth_gain)
             if value_embedding_bias:
                 self.value_embedding.bias.data.zero_()
@@ -146,9 +148,28 @@ class PatchEmbedding(nn.Module):
             x : [batch_size x n_channels x n_patches x d_model]
         """
 
-        mask = Masking.convert_seq_to_patch_view(mask, patch_size=self.patch_size).unsqueeze(-1)
+        batch_size, n_channels, n_patches, _ = x.shape
+
+        if mask is not None:
+            if mask.ndim == 2 and mask.shape[-1] == n_patches:
+                mask_patch_view = mask
+            else:
+                mask_patch_view = Masking.convert_seq_to_patch_view(
+                    mask,
+                    patch_size=self.patch_size,
+                    stride=self.patch_stride,
+                )
+        else:
+            mask_patch_view = torch.ones(
+                batch_size,
+                n_patches,
+                device=x.device,
+                dtype=x.dtype,
+            )
+
+        mask = mask_patch_view.unsqueeze(-1)
         # mask : [batch_size x n_patches x 1]
-        n_channels = x.shape[1]
+        mask = mask.to(dtype=x.dtype)
         mask = mask.repeat_interleave(self.d_model, dim=-1).unsqueeze(1).repeat(1, n_channels, 1, 1)
         # mask : [batch_size x n_channels x n_patches x d_model]
 
@@ -165,26 +186,54 @@ class PretrainHead(nn.Module):
         self,
         d_model: int = 768,
         patch_size: int = 8,
+        patch_stride: Optional[int] = None,
+        seq_len: Optional[int] = None,
         head_dropout: float = 0.1,
         orth_gain: float = 1.41,
     ):
         super().__init__()
         self.dropout = nn.Dropout(head_dropout)
         self.linear = nn.Linear(d_model, patch_size)
+        self.patch_size = patch_size
+        self.patch_stride = patch_size if patch_stride is None else patch_stride
+        self.seq_len = seq_len
 
-        if orth_gain is not None:
+        if orth_gain is not None and orth_gain > 0:
             torch.nn.init.orthogonal_(self.linear.weight, gain=orth_gain)
             self.linear.bias.data.zero_()
 
     def forward(self, x):
         """
         x: [batch_size x n_channels x n_patches x d_model]
-        output: [batch_size x n_channels x seq_len], where seq_len = n_patches * patch_size
+        output: [batch_size x n_channels x seq_len]
         """
-        # x = x.transpose(2, 3)                 # [batch_size x n_channels x n_patches x d_model]
         x = self.linear(self.dropout(x))  # [batch_size x n_channels x n_patches x patch_size]
-        x = x.flatten(start_dim=2, end_dim=3)  # [batch_size x n_patches x seq_len]
-        return x
+
+        if self.patch_stride == self.patch_size:
+            return x.flatten(start_dim=2, end_dim=3)
+
+        batch_size, n_channels, n_patches, _ = x.shape
+        stride = self.patch_stride
+        seq_len = self.seq_len or ((n_patches - 1) * stride + self.patch_size)
+
+        patches = x.reshape(batch_size * n_channels, n_patches, self.patch_size).permute(0, 2, 1)
+        reconstructed = F.fold(
+            patches,
+            output_size=(1, seq_len),
+            kernel_size=(1, self.patch_size),
+            stride=(1, stride),
+        )
+        ones = torch.ones_like(patches)
+        overlap_counter = F.fold(
+            ones,
+            output_size=(1, seq_len),
+            kernel_size=(1, self.patch_size),
+            stride=(1, stride),
+        ).clamp_min(1.0)
+
+        reconstructed = reconstructed / overlap_counter
+        reconstructed = reconstructed.view(batch_size, n_channels, seq_len)
+        return reconstructed
 
 
 class ClassificationHead(nn.Module):

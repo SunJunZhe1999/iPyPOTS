@@ -27,6 +27,8 @@ class _MOMENT(ModelCore):
         patch_stride: int,
         d_model: int,
         d_ffn: int,
+        n_layers: int,
+        n_heads: int,
         dropout: float,
         head_dropout: float,
         finetuning_mode: str,
@@ -58,6 +60,8 @@ class _MOMENT(ModelCore):
             "revin_affine": revin_affine,
             "d_model": d_model,
             "d_ff": d_ffn,
+            "n_heads": n_heads,
+            "e_layers": n_layers,
             "dropout": dropout,
             "head_dropout": head_dropout,
             "add_positional_embedding": add_positional_embedding,
@@ -71,13 +75,14 @@ class _MOMENT(ModelCore):
             "debug": True,
         }
         self.backbone = BackboneMOMENT(configs)
+        backbone_d_model = self.backbone.configs.d_model
 
         if finetuning_mode == "linear-probing":
             for name, param in self.backbone.named_parameters():
                 if not name.startswith("head"):
                     param.requires_grad = False
 
-        self.saits_embedding = SaitsEmbedding(n_features * 2, d_model, with_pos=False)
+        self.saits_embedding = SaitsEmbedding(n_features * 2, backbone_d_model, with_pos=False)
 
     def forward(
         self,
