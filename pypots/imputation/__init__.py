@@ -44,6 +44,7 @@ from .trmf import TRMF
 from .timellm import TimeLLM
 from .gpt4ts import GPT4TS
 from .moment import MOMENT
+from .uniformtsv import UniFormTSV
 from .timemixerpp import TimeMixerPP
 from .totem import TOTEM
 from .tslanet import TSLANet
@@ -95,6 +96,7 @@ __all__ = [
     "TimeLLM",
     "GPT4TS",
     "MOMENT",
+    "UniFormTSV",
     "TimeMixerPP",
     "TOTEM",
     "TSLANet",

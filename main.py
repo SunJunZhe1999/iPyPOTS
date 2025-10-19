@@ -20,6 +20,7 @@ from argument_parser import get_args
 from pipeline.imputations.saits import train_and_evaluate_saits
 from pipeline.imputations.timellm import train_and_evaluate_timellm
 from pipeline.imputations.moment import train_and_evaluate_moment
+from pipeline.imputations.uniformtsv import train_and_evaluate_uniformtsv
 from pipeline.imputations.tefn import train_and_evaluate_tefn
 from pipeline.imputations.tslanet import train_and_evaluate_tslanet
 from pipeline.imputations.gpt4ts import train_and_evaluate_gpt4ts
@@ -34,6 +35,7 @@ MODEL_PIPELINES = {
     "gpt4ts": train_and_evaluate_gpt4ts,
     # TSFM (Time-Series Foundation Model)
     "tefn": train_and_evaluate_tefn,
+    "uniformtsv": train_and_evaluate_uniformtsv,
     
     # NN (Neural Networks)
     "tslanet": train_and_evaluate_tslanet,

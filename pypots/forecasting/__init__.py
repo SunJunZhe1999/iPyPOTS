@@ -14,6 +14,7 @@ from .gpt4ts import GPT4TS
 from .micn import MICN
 from .moderntcn import ModernTCN
 from .moment import MOMENT
+from .uniformtsv import UniFormTSV
 from .segrnn import SegRNN
 from .tefn import TEFN
 from .timellm import TimeLLM
@@ -31,6 +32,7 @@ __all__ = [
     "TimeLLM",
     "GPT4TS",
     "MOMENT",
+    "UniFormTSV",
     "TimesNet",
     "ModernTCN",
     "SegRNN",

@@ -46,6 +46,15 @@ pypots.imputation.moment
    :show-inheritance:
    :inherited-members:
 
+pypots.imputation.uniformtsv
+------------------------------------
+
+.. automodule:: pypots.imputation.uniformtsv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
 pypots.imputation.tslanet
 ------------------------------------
 

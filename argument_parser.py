@@ -22,7 +22,7 @@ def get_args():
 
     # General arguments
     parser.add_argument("--model", type=str, default="llm4imp",
-                    help="Model name: llm4imp | saits | timellm | tslanet | moment | tefn | gpt4ts | timemixerpp")
+                    help="Model name: llm4imp | saits | timellm | tslanet | moment | uniformtsv | tefn | gpt4ts | timemixerpp")
     parser.add_argument("--missing_rate", type=float, default=0.1, help="Artificial missing rate in dataset")
     parser.add_argument("--saving_path", type=str, default="output/imputation", help="Directory to save results")
     parser.add_argument("--device", type=str, default=None, help="Device: 'cpu', 'cuda', or None (auto)")
@@ -74,12 +74,12 @@ def get_args():
     parser.add_argument("--d_embedding", type=int, default=64, help="Embedding dimension for TSLANet")
     parser.add_argument("--mask_ratio", type=float, default=0.15, help="Masking ratio for TSLANet")
 
-    # MOMENT-specific
+    # MOMENT/UniFormTSV-specific
     parser.add_argument("--transformer_backbone", type=str, default="t5-small",
                         help="Backbone of transformer: t5-small | t5-base | flan-t5-base | ...")
     parser.add_argument("--transformer_type", type=str, default="encoder_decoder",
                         help="Transformer type: encoder_only | decoder_only | encoder_decoder")
-    parser.add_argument("--head_dropout", type=float, default=0.0, help="Dropout rate for MOMENT head")
+    parser.add_argument("--head_dropout", type=float, default=0.0, help="Dropout rate for MOMENT/UniFormTSV head")
     parser.add_argument("--finetuning_mode", type=str, default="linear-probing",
                         help="Finetuning mode: linear-probing | end-to-end | zero-shot")
     parser.add_argument("--revin_affine", action="store_true", help="Enable RevIn affine transformation")
@@ -94,7 +94,7 @@ def get_args():
     parser.add_argument("--ORT_weight", type=float, default=1.0, help="Weight for ORT loss (TEFN)")
     parser.add_argument("--MIT_weight", type=float, default=1.0, help="Weight for MIT loss (TEFN)")
     
-        # TimeMixerPP-specific
+    # TimeMixerPP-specific
     parser.add_argument("--top_k", type=int, default=5, help="Number of top-k frequencies to use")
     parser.add_argument("--n_kernels", type=int, default=6, help="Number of Inception kernels")
     parser.add_argument("--channel_mixing", type=lambda x: bool(strtobool(x)), default=True,

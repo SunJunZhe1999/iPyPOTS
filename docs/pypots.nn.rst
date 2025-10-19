@@ -71,6 +71,12 @@ pypots.nn.modules.moment
 .. automodule:: pypots.nn.modules.moment
 :members:
 
+pypots.nn.modules.uniformtsv
+-------------------------------------------------
+
+.. automodule:: pypots.nn.modules.uniformtsv
+:members:
+
 
 
 pypots.nn.modules.inception

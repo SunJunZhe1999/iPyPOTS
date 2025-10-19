@@ -37,6 +37,15 @@ pypots.forecasting.moment
    :show-inheritance:
    :inherited-members:
 
+pypots.forecasting.uniformtsv
+------------------------------
+
+.. automodule:: pypots.forecasting.uniformtsv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
 pypots.forecasting.tefn
 ------------------------------
 
