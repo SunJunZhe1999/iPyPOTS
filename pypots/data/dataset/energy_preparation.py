@@ -9,7 +9,7 @@ import os
 import zipfile
 from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Optional, Tuple
-from urllib.request import urlretrieve
+from urllib.request import urlopen
 
 import numpy as np
 import pandas as pd
@@ -20,6 +20,7 @@ UCI_HOUSEHOLD_URL = (
     "https://archive.ics.uci.edu/static/public/235/"
     "individual+household+electric+power+consumption.zip"
 )
+UCI_HOUSEHOLD_MIRROR_URL = "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 OPSD_60MIN_URL = "https://data.open-power-system-data.org/time_series/2020-10-06/time_series_60min_singleindex.csv"
 CITYLEARN_BASE_URL = "https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5"
 
@@ -106,7 +107,7 @@ def _load_appliances_energy(dataset_dir: Path) -> Tuple[pd.DataFrame, str]:
 def _load_household_power(dataset_dir: Path) -> Tuple[pd.DataFrame, str]:
     zip_path = dataset_dir / "household_power.zip"
     txt_path = dataset_dir / "household_power_consumption.txt"
-    _download_and_extract(UCI_HOUSEHOLD_URL, zip_path, dataset_dir, txt_path)
+    _download_and_extract([UCI_HOUSEHOLD_MIRROR_URL, UCI_HOUSEHOLD_URL], zip_path, dataset_dir, txt_path)
 
     df = pd.read_csv(txt_path, sep=";", na_values="?", low_memory=False)
     timestamp = pd.to_datetime(df["Date"] + " " + df["Time"], dayfirst=True, errors="coerce")
@@ -241,21 +242,35 @@ def _load_citylearn_zone5(dataset_dir: Path) -> Tuple[pd.DataFrame, str]:
     return combined, "citylearn_zone5"
 
 
-def _download_and_extract(url: str, zip_path: Path, extract_dir: Path, expected_file: Path) -> None:
+def _download_and_extract(url: str | list[str], zip_path: Path, extract_dir: Path, expected_file: Path) -> None:
     if not expected_file.exists():
         _download_file(url, zip_path)
         with zipfile.ZipFile(zip_path) as archive:
             archive.extractall(extract_dir)
 
 
-def _download_file(url: str, destination: Path) -> None:
+def _download_file(url: str | list[str], destination: Path) -> None:
     if destination.exists() and destination.stat().st_size > 0:
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = destination.with_suffix(destination.suffix + ".tmp")
-    print(f"Downloading {url} -> {destination}")
-    urlretrieve(url, tmp_path)
-    os.replace(tmp_path, destination)
+    urls = [url] if isinstance(url, str) else list(url)
+    last_error: Exception | None = None
+    for candidate in urls:
+        print(f"Downloading {candidate} -> {destination}")
+        try:
+            with urlopen(candidate, timeout=30) as response, open(tmp_path, "wb") as handle:
+                while True:
+                    chunk = response.read(1024 * 1024)
+                    if not chunk:
+                        break
+                    handle.write(chunk)
+            os.replace(tmp_path, destination)
+            return
+        except Exception as exc:
+            last_error = exc
+            print(f"Download failed from {candidate}: {exc}")
+    raise RuntimeError(f"Failed to download {destination} from {urls}") from last_error
 
 
 def _clean_numeric_frame(frame: pd.DataFrame) -> Tuple[np.ndarray, List[str]]:
