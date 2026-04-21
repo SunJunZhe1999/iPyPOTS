@@ -45,12 +45,18 @@ fi
 echo "Visible GPUs: ${CUDA_VISIBLE_DEVICES}"
 echo "Using devices: ${DEVICE[*]}"
 
-read -ra MODELS <<< "${MODELS:-mean median locf saits tefn timemixerpp uniformtsv}"
-read -ra DATASETS <<< "${DATASETS:-physionet_2012 appliances_energy household_power citylearn_zone5 opsd_germany}"
-read -ra MISSING_RATES <<< "${MISSING_RATES:-0.1 0.3 0.5}"
+read -ra MODELS <<< "${MODELS:-mean median locf saits timemixerpp tefn uniformtsv moment tslanet gpt4ts}"
+read -ra DATASETS <<< "${DATASETS:-physionet_2012 appliances_energy household_power citylearn_zone5 opsd_germany etth1 etth2 ettm1 ettm2 solar eld}"
+read -ra MISSING_RATES <<< "${MISSING_RATES:-0.1 0.3 0.5 0.7}"
 read -ra SEEDS <<< "${SEEDS:-42 123 456}"
+TIME_BUDGET_SECONDS="${TIME_BUDGET_SECONDS:-0}"
+RUN_STARTED_AT="$(date +%s)"
+RUN_DEADLINE=0
+if [[ "${TIME_BUDGET_SECONDS}" -gt 0 ]]; then
+  RUN_DEADLINE=$(( RUN_STARTED_AT + TIME_BUDGET_SECONDS ))
+fi
 
-ROOT_OUT="output/imputation/${BACKEND}/energy_benchmark"
+ROOT_OUT="${ROOT_OUT:-output/imputation/${BACKEND}/energy_benchmark}"
 mkdir -p "${ROOT_OUT}"
 
 EPOCH="${EPOCH:-50}"
@@ -62,20 +68,27 @@ N_HEAD="${N_HEAD:-4}"
 N_LAYER="${N_LAYER:-2}"
 PATCH_SIZE="${PATCH_SIZE:-12}"
 PATCH_STRIDE="${PATCH_STRIDE:-12}"
+TRANSFORMER_BACKBONE="${TRANSFORMER_BACKBONE:-t5-small}"
+TRANSFORMER_TYPE="${TRANSFORMER_TYPE:-encoder_decoder}"
+FINETUNING_MODE="${FINETUNING_MODE:-linear-probing}"
 LEARNING_RATE="${LEARNING_RATE:-0.001}"
 WEIGHT_DECAY="${WEIGHT_DECAY:-0.0001}"
 N_FOD="${N_FOD:-4}"
 MAX_SAMPLES="${MAX_SAMPLES:-20000}"
 WINDOW_STRIDE="${WINDOW_STRIDE:-4}"
+RUN_TIMEOUT_SECONDS="${RUN_TIMEOUT_SECONDS:-0}"
 
 set_dims_for_dataset () {
   local ds="$1"
   case "$ds" in
-    "physionet_2012") N_STEPS=48;  N_FEATURES=35 ;;
+    "physionet_2012") N_STEPS=48; N_FEATURES=37 ;;
     "appliances_energy") N_STEPS=72; N_FEATURES=32 ;;
     "household_power") N_STEPS=168; N_FEATURES=11 ;;
     "citylearn_zone5") N_STEPS=168; N_FEATURES=20 ;;
     "opsd_germany") N_STEPS=168; N_FEATURES=10 ;;
+    "etth1"|"etth2"|"ettm1"|"ettm2") N_STEPS=96; N_FEATURES=7 ;;
+    "solar"|"solar_alabama") N_STEPS=24; N_FEATURES=137 ;;
+    "eld"|"electricity_load_diagrams") N_STEPS=24; N_FEATURES=370 ;;
     *) echo "Unknown dataset: $ds"; return 1 ;;
   esac
   return 0
@@ -84,6 +97,9 @@ set_dims_for_dataset () {
 SESSION_TAG="$(date +%Y%m%dT%H%M%S)"
 SESSION_LOG="${ROOT_OUT}/session_energy_benchmark_${SESSION_TAG}.log"
 echo "Session log: ${SESSION_LOG}" | tee -a "${SESSION_LOG}"
+if [[ "${TIME_BUDGET_SECONDS}" -gt 0 ]]; then
+  echo "Time budget: ${TIME_BUDGET_SECONDS}s, deadline epoch=${RUN_DEADLINE}" | tee -a "${SESSION_LOG}"
+fi
 
 for MODEL in "${MODELS[@]}"; do
   for DATASET in "${DATASETS[@]}"; do
@@ -99,6 +115,12 @@ for MODEL in "${MODELS[@]}"; do
         RUN_LOG="${LOG_DIR}/run_${RUN_TAG}.log"
         DONE_MARK="${SAVE_DIR}/.done"
         mkdir -p "${SAVE_DIR}" "${LOG_DIR}"
+
+        if [[ "${RUN_DEADLINE}" -gt 0 && "$(date +%s)" -ge "${RUN_DEADLINE}" ]]; then
+          echo "Time budget exhausted before ${RUN_TAG}; stopping benchmark loop." | tee -a "${SESSION_LOG}"
+          echo "Energy benchmark stopped at $(timestamp)." | tee -a "${SESSION_LOG}"
+          exit 0
+        fi
 
         if [[ -f "${DONE_MARK}" ]]; then
           echo "Skip done: ${RUN_TAG}" | tee -a "${SESSION_LOG}"
@@ -124,6 +146,9 @@ for MODEL in "${MODELS[@]}"; do
           --batch_size "${BATCH_SIZE}"
           --patch_size "${PATCH_SIZE}"
           --patch_stride "${PATCH_STRIDE}"
+          --transformer_backbone "${TRANSFORMER_BACKBONE}"
+          --transformer_type "${TRANSFORMER_TYPE}"
+          --finetuning_mode "${FINETUNING_MODE}"
           --learning_rate "${LEARNING_RATE}"
           --weight_decay "${WEIGHT_DECAY}"
           --n_fod "${N_FOD}"
@@ -133,18 +158,46 @@ for MODEL in "${MODELS[@]}"; do
           --model_saving_strategy "best"
         )
 
-        {
-          echo "===== CMD @ $(timestamp) =====" >> "${RUN_LOG}"
-          printf '%q ' "${cmd[@]}" >> "${RUN_LOG}"; echo >> "${RUN_LOG}"
-          echo "================================" >> "${RUN_LOG}"
+        echo "===== CMD @ $(timestamp) =====" >> "${RUN_LOG}"
+        printf '%q ' "${cmd[@]}" >> "${RUN_LOG}"; echo >> "${RUN_LOG}"
+        echo "================================" >> "${RUN_LOG}"
+        status=""
+
+        if [[ "${RUN_TIMEOUT_SECONDS}" -gt 0 ]]; then
+          if command -v srun &>/dev/null; then
+            srun --quiet --unbuffered "${cmd[@]}" > >(tee -a "${RUN_LOG}") 2>&1 &
+          else
+            "${cmd[@]}" > >(tee -a "${RUN_LOG}") 2>&1 &
+          fi
+          run_pid=$!
+          run_started_at=$(date +%s)
+          while kill -0 "${run_pid}" 2>/dev/null; do
+            now=$(date +%s)
+            if (( now - run_started_at >= RUN_TIMEOUT_SECONDS )); then
+              echo "TIMEOUT(${RUN_TIMEOUT_SECONDS}s): ${RUN_TAG}" | tee -a "${RUN_LOG}" "${SESSION_LOG}"
+              kill -TERM "${run_pid}" 2>/dev/null || true
+              sleep 5
+              kill -KILL "${run_pid}" 2>/dev/null || true
+              wait "${run_pid}" 2>/dev/null
+              status=124
+              break
+            fi
+            sleep 5
+          done
+          if [[ -z "${status}" ]]; then
+            wait "${run_pid}"
+            status=$?
+          fi
+        else
           if command -v srun &>/dev/null; then
             srun --quiet --unbuffered "${cmd[@]}" 2>&1 | tee -a "${RUN_LOG}"
           else
             "${cmd[@]}" 2>&1 | tee -a "${RUN_LOG}"
           fi
-        }
+          status=${PIPESTATUS[0]}
+        fi
 
-        status=${PIPESTATUS[0]}
+        status=${status:-124}
         if [[ $status -eq 0 ]]; then
           touch "${DONE_MARK}"
           echo "DONE: ${RUN_TAG}" | tee -a "${SESSION_LOG}"

@@ -22,6 +22,14 @@ DATASET_META = {
     "household_power": {"n_steps": 168, "n_features": 11, "domain": "energy", "is_energy": 1},
     "citylearn_zone5": {"n_steps": 168, "n_features": 20, "domain": "energy", "is_energy": 1},
     "opsd_germany": {"n_steps": 168, "n_features": 10, "domain": "energy", "is_energy": 1},
+    "etth1": {"n_steps": 96, "n_features": 7, "domain": "energy_transformer", "is_energy": 1},
+    "etth2": {"n_steps": 96, "n_features": 7, "domain": "energy_transformer", "is_energy": 1},
+    "ettm1": {"n_steps": 96, "n_features": 7, "domain": "energy_transformer", "is_energy": 1},
+    "ettm2": {"n_steps": 96, "n_features": 7, "domain": "energy_transformer", "is_energy": 1},
+    "solar": {"n_steps": 24, "n_features": 137, "domain": "solar_energy", "is_energy": 1},
+    "solar_alabama": {"n_steps": 24, "n_features": 137, "domain": "solar_energy", "is_energy": 1},
+    "eld": {"n_steps": 24, "n_features": 370, "domain": "electricity_load", "is_energy": 1},
+    "electricity_load_diagrams": {"n_steps": 24, "n_features": 370, "domain": "electricity_load", "is_energy": 1},
 }
 
 

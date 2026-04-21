@@ -8,6 +8,7 @@
 import warnings
 from argparse import Namespace
 from math import ceil
+from types import SimpleNamespace
 from typing import Union
 
 import torch
@@ -41,6 +42,8 @@ SUPPORTED_HUGGINGFACE_MODELS = [
     "google/flan-t5-xl",
     "google/flan-t5-xxl",
 ]
+SUPPORTED_LOCAL_MODELS = ["PatchTST"]
+SUPPORTED_TRANSFORMER_BACKBONES = SUPPORTED_HUGGINGFACE_MODELS + SUPPORTED_LOCAL_MODELS
 
 TUNING_MODE = [
     "linear-probing",
@@ -63,8 +66,8 @@ class BackboneUniFormTSV(nn.Module):
 
         assert configs.finetuning_mode in TUNING_MODE, f"finetuning_mode should be one of {TUNING_MODE}"
         assert (
-            configs.transformer_backbone in SUPPORTED_HUGGINGFACE_MODELS
-        ), f"transformer_type must be one of {SUPPORTED_HUGGINGFACE_MODELS}"
+            configs.transformer_backbone in SUPPORTED_TRANSFORMER_BACKBONES
+        ), f"transformer_backbone must be one of {SUPPORTED_TRANSFORMER_BACKBONES}"
         assert configs.transformer_type in TRANSFORMER_TYPE, f"transformer_type must be one of {TRANSFORMER_TYPE}"
 
         self.configs = configs
@@ -107,13 +110,10 @@ class BackboneUniFormTSV(nn.Module):
         if configs.transformer_backbone == "PatchTST" and configs.transformer_type != "encoder_only":
             warnings.warn("PatchTST only supports encoder-only transformer backbones.")
             configs.transformer_type = "encoder_only"
-        if (
-            configs.transformer_backbone != "PatchTST"
-            and configs.transformer_backbone not in SUPPORTED_HUGGINGFACE_MODELS
-        ):
+        if configs.transformer_backbone not in SUPPORTED_TRANSFORMER_BACKBONES:
             raise NotImplementedError(
                 f"Transformer backbone {configs.transformer_backbone} not supported."
-                f"Please choose from {SUPPORTED_HUGGINGFACE_MODELS} or PatchTST."
+                f"Please choose from {SUPPORTED_TRANSFORMER_BACKBONES}."
             )
         if configs.transformer_backbone in SUPPORTED_HUGGINGFACE_MODELS:
             backbone_d_model = get_huggingface_model_dimensions(configs.transformer_backbone)
@@ -212,41 +212,43 @@ class BackboneUniFormTSV(nn.Module):
         return transformer_backbone
 
     def _get_patchtst_encoder(self, configs):
-        # from .layers.self_attention_family import AttentionLayer, FullAttention
-        # from .layers.transformer_encoder_decoder import Encoder, EncoderLayer
-        # encoder = Encoder(
-        #     [
-        #         EncoderLayer(
-        #             AttentionLayer(
-        #                 FullAttention(
-        #                     attention_dropout=configs.attention_dropout,
-        #                     output_attention=configs.output_attention,
-        #                 ),
-        #                 configs.d_model,
-        #                 configs.n_heads,
-        #             ),
-        #             configs.d_model,
-        #             configs.d_ff,
-        #             dropout=configs.dropout,
-        #             activation=configs.activation,
-        #         )
-        #         for l in range(configs.e_layers)
-        #     ],
-        #     norm_layer=torch.nn.LayerNorm(configs.d_model),
-        # )
+        class PatchTSTLikeEncoder(nn.Module):
+            def __init__(self, d_model: int, n_layers: int, n_heads: int, d_ffn: int, dropout: float):
+                super().__init__()
+                layer = nn.TransformerEncoderLayer(
+                    d_model=d_model,
+                    nhead=n_heads,
+                    dim_feedforward=d_ffn,
+                    dropout=dropout,
+                    activation="gelu",
+                    batch_first=True,
+                    norm_first=True,
+                )
+                self.encoder = nn.TransformerEncoder(layer, num_layers=n_layers)
 
-        from ..patchtst import PatchtstEncoder
+            def forward(self, inputs_embeds=None, attention_mask=None, **kwargs):
+                if inputs_embeds is None:
+                    inputs_embeds = kwargs.get("decoder_inputs_embeds")
+                key_padding_mask = attention_mask == 0 if attention_mask is not None else None
+                hidden = self.encoder(inputs_embeds, src_key_padding_mask=key_padding_mask)
+                return SimpleNamespace(last_hidden_state=hidden)
 
-        encoder = PatchtstEncoder(
-            n_layers=configs.e_layers,
+        n_heads = configs.getattr("n_heads", 4)
+        if configs.d_model % n_heads != 0:
+            warnings.warn(
+                f"d_model={configs.d_model} is not divisible by n_heads={n_heads}. "
+                "Falling back to one attention head for the local PatchTST backbone."
+            )
+            n_heads = 1
+
+        encoder = PatchTSTLikeEncoder(
             d_model=configs.d_model,
-            n_heads=configs.n_heads,
-            d_k=configs.d_model // configs.n_heads,
-            d_v=configs.d_model // configs.n_heads,
-            d_ffn=configs.d_ff,
-            dropout=configs.dropout,
-            attn_dropout=configs.dropout,
+            n_layers=configs.getattr("n_layers", 2),
+            n_heads=n_heads,
+            d_ffn=configs.getattr("d_ff", configs.d_model * 4),
+            dropout=configs.getattr("dropout", 0.1),
         )
+        logger.info("Initializing local PatchTST-style transformer backbone.")
 
         return encoder
 

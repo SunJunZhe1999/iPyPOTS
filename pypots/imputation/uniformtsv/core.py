@@ -23,6 +23,7 @@ class _UniFormTSV(ModelCore):
         n_features: int,
         transformer_backbone: str,
         transformer_type: str,
+        n_layers: int,
         patch_size: int,
         patch_stride: int,
         d_model: int,
@@ -55,6 +56,8 @@ class _UniFormTSV(ModelCore):
             "seq_len": n_steps,
             "patch_len": patch_size,
             "patch_stride_len": patch_stride,
+            "n_layers": n_layers,
+            "n_heads": 4,
             "revin_affine": revin_affine,
             "d_model": d_model,
             "d_ff": d_ffn,
@@ -71,6 +74,7 @@ class _UniFormTSV(ModelCore):
             "debug": True,
         }
         self.backbone = BackboneUniFormTSV(configs)
+        self.output_projection = torch.nn.Linear(d_model, n_features) if n_features > d_model else None
 
         if finetuning_mode == "linear-probing":
             for name, param in self.backbone.named_parameters():
@@ -102,7 +106,10 @@ class _UniFormTSV(ModelCore):
         # print(f"reconstruction.shape {reconstruction.shape}")
         reconstruction = reconstruction.permute(0, 2, 1)
         # print(f"reconstruction.shape {reconstruction.shape}")
-        reconstruction = reconstruction[:, :, : self.n_features]
+        if self.output_projection is not None:
+            reconstruction = self.output_projection(reconstruction)
+        else:
+            reconstruction = reconstruction[:, :, : self.n_features]
 
         # replace the observed part with values from X
         imputed_data = missing_mask * X + (1 - missing_mask) * reconstruction

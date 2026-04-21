@@ -33,6 +33,14 @@ DATASET_DIMS = {
     "household_power": {"n_steps": 168, "n_features": 11},
     "citylearn_zone5": {"n_steps": 168, "n_features": 20},
     "opsd_germany": {"n_steps": 168, "n_features": 10},
+    "etth1": {"n_steps": 96, "n_features": 7},
+    "etth2": {"n_steps": 96, "n_features": 7},
+    "ettm1": {"n_steps": 96, "n_features": 7},
+    "ettm2": {"n_steps": 96, "n_features": 7},
+    "solar": {"n_steps": 24, "n_features": 137},
+    "solar_alabama": {"n_steps": 24, "n_features": 137},
+    "eld": {"n_steps": 24, "n_features": 370},
+    "electricity_load_diagrams": {"n_steps": 24, "n_features": 370},
 }
 
 STAT_FEATURE_NAMES = [
@@ -561,7 +569,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Extract 80-dimensional C-TCAR features.")
     parser.add_argument(
         "--datasets",
-        default="physionet_2012 appliances_energy household_power citylearn_zone5 opsd_germany",
+        default="physionet_2012 appliances_energy household_power citylearn_zone5 opsd_germany etth1 etth2 ettm1 ettm2 solar eld",
         help="Whitespace/comma-separated dataset names",
     )
     parser.add_argument("--missing-rates", default="0.1 0.3 0.5", help="Whitespace/comma-separated missing rates")

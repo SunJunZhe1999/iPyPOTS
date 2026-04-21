@@ -29,7 +29,8 @@ def get_args():
     parser.add_argument("--dataset_name", type=str, default="physionet_2012",
                         help="Name of the dataset to use: physionet_2012, air_quality, pems_traffic, etth1, etth2,"
                              " ettm1, ettm2, italy_air_quality, beijing_multisite_air_quality,"
-                             " appliances_energy, household_power, opsd_germany, citylearn_zone5")
+                             " appliances_energy, household_power, opsd_germany, citylearn_zone5,"
+                             " solar, solar_alabama, eld, electricity_load_diagrams")
     parser.add_argument("--window_stride", type=int, default=1,
                         help="Sliding-window stride for custom public energy datasets")
     parser.add_argument("--max_samples", type=int, default=None,
@@ -82,7 +83,7 @@ def get_args():
 
     # MOMENT/UniFormTSV-specific
     parser.add_argument("--transformer_backbone", type=str, default="t5-small",
-                        help="Backbone of transformer: t5-small | t5-base | flan-t5-base | ...")
+                        help="Backbone of transformer: PatchTST | t5-small | t5-base | flan-t5-base | ...")
     parser.add_argument("--transformer_type", type=str, default="encoder_decoder",
                         help="Transformer type: encoder_only | decoder_only | encoder_decoder")
     parser.add_argument("--head_dropout", type=float, default=0.0, help="Dropout rate for MOMENT/UniFormTSV head")

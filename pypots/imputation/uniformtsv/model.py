@@ -199,6 +199,7 @@ class UniFormTSV(BaseNNImputer):
             n_features=self.n_features,
             transformer_backbone=self.transformer_backbone,
             transformer_type=self.transformer_type,
+            n_layers=self.n_layers,
             patch_size=self.patch_size,
             patch_stride=self.patch_stride,
             d_model=self.d_model,
