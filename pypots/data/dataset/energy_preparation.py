@@ -8,7 +8,7 @@ import argparse
 import os
 import zipfile
 from pathlib import Path
-from typing import Callable, Dict, Iterable, List, Optional, Tuple
+from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union
 from urllib.request import urlopen
 
 import numpy as np
@@ -242,20 +242,20 @@ def _load_citylearn_zone5(dataset_dir: Path) -> Tuple[pd.DataFrame, str]:
     return combined, "citylearn_zone5"
 
 
-def _download_and_extract(url: str | list[str], zip_path: Path, extract_dir: Path, expected_file: Path) -> None:
+def _download_and_extract(url: Union[str, List[str]], zip_path: Path, extract_dir: Path, expected_file: Path) -> None:
     if not expected_file.exists():
         _download_file(url, zip_path)
         with zipfile.ZipFile(zip_path) as archive:
             archive.extractall(extract_dir)
 
 
-def _download_file(url: str | list[str], destination: Path) -> None:
+def _download_file(url: Union[str, List[str]], destination: Path) -> None:
     if destination.exists() and destination.stat().st_size > 0:
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = destination.with_suffix(destination.suffix + ".tmp")
     urls = [url] if isinstance(url, str) else list(url)
-    last_error: Exception | None = None
+    last_error: Optional[Exception] = None
     for candidate in urls:
         print(f"Downloading {candidate} -> {destination}")
         try:
