@@ -53,6 +53,13 @@ MODEL_PIPELINES = {
 }
 
 
+def _metric_for_json(value):
+    """Convert numpy/torch scalar metrics to plain JSON numbers."""
+    if hasattr(value, "item"):
+        value = value.item()
+    return float(value)
+
+
 
 def main(args):
     print(f"🚀 Running imputation pipeline for model: {args.model}")
@@ -70,7 +77,12 @@ def main(args):
     metrics_file = os.path.join(metrics_dir, f"{model_name}_metrics.json")
     with open(metrics_file, "w") as f:
         json.dump(
-            {"MAE": mae, "MSE": mse, "RMSE": rmse, "MRE": mre},
+            {
+                "MAE": _metric_for_json(mae),
+                "MSE": _metric_for_json(mse),
+                "RMSE": _metric_for_json(rmse),
+                "MRE": _metric_for_json(mre),
+            },
             f,
             indent=4
         )

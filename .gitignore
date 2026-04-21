@@ -33,3 +33,4 @@ docs/_build
 output/
 datasets/
 .venv/
+.lightcc_codex_key*
