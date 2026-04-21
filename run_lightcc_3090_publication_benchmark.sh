@@ -28,27 +28,27 @@ export USE_GPUS="${USE_GPUS:-0}"
 export USE_MPS="${USE_MPS:-}"
 export ROOT_OUT
 
-# Order matters: cheap baselines first, then increasingly expensive neural and
-# foundation-style models. This gives useful saved coverage even if the rental
-# is interrupted.
-export MODELS="${MODELS:-mean median locf saits timemixerpp tefn uniformtsv moment tslanet gpt4ts}"
+# Order matters: on rented GPUs, prioritize the neural and foundation-style
+# models so the GPU starts producing evidence immediately. The cheap baselines
+# still run afterward and skip any completed .done markers.
+export MODELS="${MODELS:-saits timemixerpp tefn uniformtsv moment tslanet gpt4ts mean median locf}"
 export DATASETS="${DATASETS:-appliances_energy household_power citylearn_zone5 opsd_germany etth1 etth2 ettm1 ettm2 solar eld physionet_2012}"
 export MISSING_RATES="${MISSING_RATES:-0.1 0.3 0.5 0.7}"
 export SEEDS="${SEEDS:-42 123 456 7 999}"
 export CTCAR_DATASETS="${CTCAR_DATASETS:-appliances_energy household_power citylearn_zone5 opsd_germany etth1 etth2 ettm1 ettm2 solar eld physionet_2012}"
 export CTCAR_MISSING_RATES="${CTCAR_MISSING_RATES:-0.1 0.3 0.5 0.7}"
 
-export TIME_BUDGET_SECONDS="${TIME_BUDGET_SECONDS:-129600}"
-export EPOCH="${EPOCH:-120}"
-export PATIENCE="${PATIENCE:-20}"
-export MAX_SAMPLES="${MAX_SAMPLES:-8000}"
-export BATCH_SIZE="${BATCH_SIZE:-128}"
-export D_MODEL="${D_MODEL:-128}"
-export D_FFN="${D_FFN:-256}"
+export TIME_BUDGET_SECONDS="${TIME_BUDGET_SECONDS:-172800}"
+export EPOCH="${EPOCH:-180}"
+export PATIENCE="${PATIENCE:-30}"
+export MAX_SAMPLES="${MAX_SAMPLES:-20000}"
+export BATCH_SIZE="${BATCH_SIZE:-512}"
+export D_MODEL="${D_MODEL:-256}"
+export D_FFN="${D_FFN:-512}"
 export N_HEAD="${N_HEAD:-8}"
-export N_LAYER="${N_LAYER:-3}"
-export N_FOD="${N_FOD:-4}"
-export RUN_TIMEOUT_SECONDS="${RUN_TIMEOUT_SECONDS:-1800}"
+export N_LAYER="${N_LAYER:-4}"
+export N_FOD="${N_FOD:-8}"
+export RUN_TIMEOUT_SECONDS="${RUN_TIMEOUT_SECONDS:-3600}"
 export WINDOW_STRIDE="${WINDOW_STRIDE:-2}"
 export PATCH_SIZE="${PATCH_SIZE:-12}"
 export PATCH_STRIDE="${PATCH_STRIDE:-12}"
