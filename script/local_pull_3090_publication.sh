@@ -23,10 +23,6 @@ trap 'rmdir "${LOCK_DIR}" 2>/dev/null || true' EXIT
   printf '%s starting rsync pull\n' "$(date '+%Y-%m-%dT%H:%M:%S%z')"
   rsync -az --partial --timeout=90 \
     -e "ssh -i ${KEY} -p ${PORT} -o StrictHostKeyChecking=no -o BatchMode=yes" \
-    --exclude '*.pypots' \
-    --exclude '*.pt' \
-    --exclude '*.pth' \
-    --exclude '*.ckpt' \
     "${REMOTE}:${REMOTE_ROOT}/" \
     "${ROOT}/"
   status=$?
