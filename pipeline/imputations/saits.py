@@ -50,7 +50,7 @@ def train_and_evaluate_saits(dataset, args):
         batch_size=args.batch_size ,
         epochs=args.epochs ,
         patience=args.patience ,
-        optimizer=Adam(lr=1e-3),
+        optimizer=Adam(lr=args.learning_rate, weight_decay=args.weight_decay),
         num_workers=0,
         device=args.device,
         saving_path=args.saving_path,
@@ -69,5 +69,5 @@ def train_and_evaluate_saits(dataset, args):
     mse = calc_mse(imputations, test_X_ori, test_X_indicating_mask)
     rmse = calc_rmse(imputations, test_X_ori, test_X_indicating_mask)
     mre = calc_mre(imputations, test_X_ori, test_X_indicating_mask)
-    print(f"[LLM4IMP] Testing —— MAE: {mae:.4f}| MSE: {mse:.4f}| RMSE: {rmse:.4f}| MRE: {mre:.4f}| ")
+    print(f"[SAITS] Testing —— MAE: {mae:.4f}| MSE: {mse:.4f}| RMSE: {rmse:.4f}| MRE: {mre:.4f}| ")
     return mae, mse, rmse, mre

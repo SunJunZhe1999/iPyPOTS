@@ -21,14 +21,20 @@ def get_args():
     parser = argparse.ArgumentParser(description="Run imputation models via PyPOTS pipeline")
 
     # General arguments
-    parser.add_argument("--model", type=str, default="llm4imp",
-                    help="Model name: llm4imp | saits | timellm | tslanet | moment | uniformtsv | tefn | gpt4ts | timemixerpp")
+    parser.add_argument("--model", type=str, default="saits",
+                    help="Model name: mean | median | locf | saits | timellm | tslanet | moment | uniformtsv | tefn | gpt4ts | timemixerpp")
     parser.add_argument("--missing_rate", type=float, default=0.1, help="Artificial missing rate in dataset")
     parser.add_argument("--saving_path", type=str, default="output/imputation", help="Directory to save results")
     parser.add_argument("--device", type=str, default=None, help="Device: 'cpu', 'cuda', or None (auto)")
     parser.add_argument("--dataset_name", type=str, default="physionet_2012",
                         help="Name of the dataset to use: physionet_2012, air_quality, pems_traffic, etth1, etth2,"
-                             " ettm1, ettm2, italy_air_quality, beijing_multisite_air_quality")
+                             " ettm1, ettm2, italy_air_quality, beijing_multisite_air_quality,"
+                             " appliances_energy, household_power, opsd_germany, citylearn_zone5")
+    parser.add_argument("--window_stride", type=int, default=1,
+                        help="Sliding-window stride for custom public energy datasets")
+    parser.add_argument("--max_samples", type=int, default=None,
+                        help="Maximum number of windows to keep for custom public energy datasets")
+    parser.add_argument("--random_seed", type=int, default=2025, help="Random seed for dataset masking")
 
     # Shared model hyperparameters
     parser.add_argument("--n_steps", type=int, default=48, help="Number of time steps")
@@ -41,7 +47,7 @@ def get_args():
 
     # LLM-based models
     parser.add_argument("--patch_size", type=int, default=12, help="Patch length for patch embedding")
-    parser.add_argument("--patch_stride", type=int, default=4, help="Patch stride")
+    parser.add_argument("--patch_stride", type=int, default=12, help="Patch stride")
     parser.add_argument("--d_llm", type=int, default=768, help="LLM hidden dimension (GPT2: 768, LLaMA: 4096)")
     parser.add_argument("--prompt_template", type=str,
                         default="Impute missing values at time steps where mask=0",
@@ -88,7 +94,7 @@ def get_args():
     parser.add_argument("--orth_gain", type=float, default=1.0, help="Gain for orthogonal initialization")
 
     # TEFN-specific
-    parser.add_argument("--n_fod", type=int, default=16, help="Number of FODs in TEFN")
+    parser.add_argument("--n_fod", type=int, default=4, help="Number of FODs in TEFN; memory scales with 2**n_fod")
     parser.add_argument("--apply_nonstationary_norm", action="store_true",
                         help="Apply nonstationary norm (TEFN)")
     parser.add_argument("--ORT_weight", type=float, default=1.0, help="Weight for ORT loss (TEFN)")
@@ -108,6 +114,8 @@ def get_args():
     parser.add_argument("--batch_size", type=int, default=32, help="Training batch size")
     parser.add_argument("--epochs", type=int, default=10, help="Number of training epochs")
     parser.add_argument("--patience", type=int, default=3, help="Early stopping patience")
+    parser.add_argument("--learning_rate", type=float, default=1e-3, help="Optimizer learning rate")
+    parser.add_argument("--weight_decay", type=float, default=0.0, help="Optimizer weight decay")
 
     # Optional training behavior
     parser.add_argument("--optimizer", type=str, default="adam", help="Optimizer to use (default: adam)")

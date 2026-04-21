@@ -46,7 +46,7 @@ def train_and_evaluate_tslanet(dataset: dict, args) -> Tuple[float, float, float
         batch_size=args.batch_size,
         epochs=args.epochs,
         patience=args.patience,
-        optimizer=Adam(lr=1e-3),
+        optimizer=Adam(lr=args.learning_rate, weight_decay=args.weight_decay),
         device=args.device,
         saving_path=args.saving_path,
         model_saving_strategy="best",

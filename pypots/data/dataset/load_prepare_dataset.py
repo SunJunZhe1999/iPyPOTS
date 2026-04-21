@@ -16,7 +16,10 @@ Lab: Prof YU Keping's Lab
 import os
 from typing import Dict
 import benchpots
+import numpy as np
 import tsdb
+
+from .energy_preparation import CUSTOM_ENERGY_DATASET_NAMES, prepare_custom_energy_dataset
 
 
 class DatasetPreparator:
@@ -47,6 +50,9 @@ class DatasetPreparator:
         dataset_name = args.dataset_name
         rate = args.missing_rate
         n_steps = getattr(args, "n_steps", 48)
+        window_stride = getattr(args, "window_stride", 1)
+        max_samples = getattr(args, "max_samples", None)
+        random_state = getattr(args, "random_seed", 2025)
 
         # Construct rate-specific path
         rate_cache_dir = os.path.join(self.base_cache_dir, f"rate_{rate}")
@@ -104,6 +110,17 @@ class DatasetPreparator:
                 dataset_name=dataset_name,
             )
 
+        elif name in CUSTOM_ENERGY_DATASET_NAMES:
+            dataset = prepare_custom_energy_dataset(
+                name=name,
+                cache_dir=self.base_cache_dir,
+                rate=rate,
+                n_steps=n_steps,
+                window_stride=window_stride,
+                max_samples=max_samples,
+                random_state=random_state,
+            )
+
         elif tsdb.has(name):
             print(f"📥 Downloading raw dataset '{name}' via TSDB to {rate_cache_dir}")
             tsdb.download_and_extract(name, rate_cache_dir)
@@ -112,5 +129,40 @@ class DatasetPreparator:
         else:
             raise ValueError(f"❌ Unknown or unsupported dataset: {name}")
 
+        dataset = self._limit_samples(dataset, max_samples, random_state)
+
         print(f"✅ Dataset '{name}' with missing rate {rate} loaded at: {rate_cache_dir}")
+        return dataset
+
+    @staticmethod
+    def _limit_samples(dataset: Dict, max_samples, random_state: int) -> Dict:
+        if max_samples is None:
+            return dataset
+
+        max_samples = int(max_samples)
+        if max_samples <= 0:
+            return dataset
+
+        split_limits = {
+            "train": max(1, int(max_samples * 0.7)),
+            "val": max(1, int(max_samples * 0.1)),
+            "test": max(1, max_samples - int(max_samples * 0.7) - int(max_samples * 0.1)),
+        }
+        rng = np.random.default_rng(random_state)
+
+        for split, limit in split_limits.items():
+            x_key = f"{split}_X"
+            if x_key not in dataset:
+                continue
+            n_samples = dataset[x_key].shape[0]
+            if n_samples <= limit:
+                continue
+
+            indices = np.sort(rng.choice(n_samples, size=limit, replace=False))
+            for key, value in list(dataset.items()):
+                if not key.startswith(f"{split}_"):
+                    continue
+                if hasattr(value, "shape") and len(value.shape) > 0 and value.shape[0] == n_samples:
+                    dataset[key] = value[indices]
+
         return dataset

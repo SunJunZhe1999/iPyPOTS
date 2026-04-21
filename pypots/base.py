@@ -141,6 +141,8 @@ class BaseModel(ABC):
             # default selection
             if torch.cuda.is_available() and torch.cuda.device_count() > 0:
                 self.device = torch.device("cuda")  # maps to cuda:0
+            elif torch.backends.mps.is_available():
+                self.device = torch.device("mps")
             else:
                 self.device = torch.device("cpu")
             logger.info(f"🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: {self.device}")
@@ -151,11 +153,15 @@ class BaseModel(ABC):
                 d = d.lower()
                 if d == "cpu":
                     dev_objs.append(torch.device("cpu"))
+                elif d == "mps":
+                    dev_objs.append(torch.device("mps"))
                 else:
                     assert d.startswith("cuda"), "Only CUDA devices supported for multi-device training."
                     dev_objs.append(torch.device(d))
 
             # If more than one => keep as list; else a single device
+            if len(dev_objs) > 1:
+                assert all(d.type == "cuda" for d in dev_objs), "Multi-device training only supports CUDA."
             self.device = dev_objs if len(dev_objs) > 1 else dev_objs[0]
             logger.info(f"🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: {self.device}")
 
@@ -164,6 +170,8 @@ class BaseModel(ABC):
         (isinstance(self.device, torch.device) and self.device.type == "cuda"):
             assert torch.cuda.is_available() and torch.cuda.device_count() > 0, \
                 "CUDA requested but not available."
+        if isinstance(self.device, torch.device) and self.device.type == "mps":
+            assert torch.backends.mps.is_available(), "MPS requested but not available."
 
         # AMP gate
         if os.getenv("ENABLE_AMP", False):

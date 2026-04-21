@@ -54,7 +54,7 @@ def train_and_evaluate_timellm(dataset: dict, args):
         epochs=args.epochs,
         patience=args.patience,
         domain_prompt_content="PhysioNet ICU",
-        optimizer=Adam(lr=1e-3),
+        optimizer=Adam(lr=args.learning_rate, weight_decay=args.weight_decay),
         num_workers=0,
         device=args.device,
         saving_path=args.saving_path,

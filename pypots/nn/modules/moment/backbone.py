@@ -85,7 +85,11 @@ class BackboneMOMENT(nn.Module):
             value_embedding_bias=configs.getattr("value_embedding_bias", False),
             orth_gain=configs.getattr("orth_gain", 1.41),
         ).to(configs.device)
-        self.mask_generator = Masking(mask_ratio=configs.getattr("mask_ratio", 0.0))
+        self.mask_generator = Masking(
+            mask_ratio=configs.getattr("mask_ratio", 0.0),
+            patch_size=configs.patch_len,
+            stride=configs.patch_stride_len,
+        )
 
         # Transformer backbone
         self.encoder = self._get_transformer_backbone(configs)
@@ -111,9 +115,17 @@ class BackboneMOMENT(nn.Module):
                 f"Transformer backbone {configs.transformer_backbone} not supported."
                 f"Please choose from {SUPPORTED_HUGGINGFACE_MODELS} or PatchTST."
             )
-        if configs.d_model is None and configs.transformer_backbone in SUPPORTED_HUGGINGFACE_MODELS:
-            configs.d_model = get_huggingface_model_dimensions(configs.transformer_backbone)
-            logger.info("Setting d_model to {}".format(configs.d_model))
+        if configs.transformer_backbone in SUPPORTED_HUGGINGFACE_MODELS:
+            backbone_d_model = get_huggingface_model_dimensions(configs.transformer_backbone)
+            if configs.d_model is None:
+                configs.d_model = backbone_d_model
+                logger.info("Setting d_model to {}".format(configs.d_model))
+            elif configs.d_model != backbone_d_model:
+                warnings.warn(
+                    f"d_model={configs.d_model} does not match {configs.transformer_backbone} "
+                    f"hidden size {backbone_d_model}. Using {backbone_d_model} for compatibility."
+                )
+                configs.d_model = backbone_d_model
         elif configs.d_model is None:
             raise ValueError(
                 "d_model must be specified if transformer backbone \
@@ -176,10 +188,16 @@ class BackboneMOMENT(nn.Module):
 
         if configs.getattr("randomly_initialize_backbone", False):
             model_config = T5Config.from_pretrained(configs.transformer_backbone)
-            transformer_backbone = T5Model(model_config)
+            if configs.transformer_type == "encoder_only":
+                transformer_backbone = T5EncoderModel(model_config)
+            else:
+                transformer_backbone = T5Model(model_config)
             logger.info(f"Initializing randomly initialized transformer from {configs.transformer_backbone}.")
         else:
-            transformer_backbone = T5EncoderModel.from_pretrained(configs.transformer_backbone)
+            if configs.transformer_type == "encoder_only":
+                transformer_backbone = T5EncoderModel.from_pretrained(configs.transformer_backbone)
+            else:
+                transformer_backbone = T5Model.from_pretrained(configs.transformer_backbone)
             logger.info(f"Initializing pre-trained transformer from {configs.transformer_backbone}.")
 
         if configs.transformer_type == "encoder_only":
@@ -252,7 +270,11 @@ class BackboneMOMENT(nn.Module):
         x_enc = self.normalizer(x=x_enc, mask=input_mask, mode="norm")
         x_enc = torch.nan_to_num(x_enc, nan=0, posinf=0, neginf=0)
 
-        input_mask_patch_view = Masking.convert_seq_to_patch_view(input_mask, self.patch_size)
+        input_mask_patch_view = Masking.convert_seq_to_patch_view(
+            input_mask,
+            self.patch_size,
+            stride=self.configs.patch_stride_len,
+        )
 
         x_enc = self.tokenizer(x=x_enc)
         enc_in = self.patch_embedding(x_enc, mask=input_mask)
@@ -260,9 +282,11 @@ class BackboneMOMENT(nn.Module):
         n_patches = enc_in.shape[2]
         enc_in = enc_in.reshape((batch_size * n_channels, n_patches, self.configs.d_model))
 
-        attention_mask = Masking.convert_seq_to_patch_view(input_mask, self.patch_size).repeat_interleave(
-            n_channels, dim=0
-        )
+        attention_mask = Masking.convert_seq_to_patch_view(
+            input_mask,
+            self.patch_size,
+            stride=self.configs.patch_stride_len,
+        ).repeat_interleave(n_channels, dim=0)
         outputs = self.encoder(inputs_embeds=enc_in, attention_mask=attention_mask)
         enc_out = outputs.last_hidden_state
 
@@ -321,9 +345,11 @@ class BackboneMOMENT(nn.Module):
         # [batch_size * n_channels x n_patches x d_model]
 
         # Encoder
-        attention_mask = Masking.convert_seq_to_patch_view(input_mask, self.patch_size).repeat_interleave(
-            n_channels, dim=0
-        )
+        attention_mask = Masking.convert_seq_to_patch_view(
+            input_mask,
+            self.patch_size,
+            stride=self.configs.patch_stride_len,
+        ).repeat_interleave(n_channels, dim=0)
         if self.configs.transformer_type == "encoder_decoder":
             outputs = self.encoder(
                 inputs_embeds=enc_in,
@@ -402,7 +428,11 @@ class BackboneMOMENT(nn.Module):
         # [batch_size * n_channels x n_patches x d_model]
 
         attention_mask = (
-            Masking.convert_seq_to_patch_view(input_mask, self.patch_size)
+            Masking.convert_seq_to_patch_view(
+                input_mask,
+                self.patch_size,
+                stride=self.configs.patch_stride_len,
+            )
             .repeat_interleave(n_channels, dim=0)
             .to(x_enc.device)
         )
@@ -487,9 +517,11 @@ class BackboneMOMENT(nn.Module):
         enc_in = enc_in.reshape((batch_size * n_channels, n_patches, self.configs.d_model))
 
         # Encoder
-        attention_mask = Masking.convert_seq_to_patch_view(input_mask, self.patch_size).repeat_interleave(
-            n_channels, dim=0
-        )
+        attention_mask = Masking.convert_seq_to_patch_view(
+            input_mask,
+            self.patch_size,
+            stride=self.configs.patch_stride_len,
+        ).repeat_interleave(n_channels, dim=0)
         if self.configs.transformer_type == "encoder_decoder":
             outputs = self.encoder(
                 inputs_embeds=enc_in,
@@ -567,9 +599,11 @@ class BackboneMOMENT(nn.Module):
         # [batch_size * n_channels x n_patches x d_model]
 
         # Encoder
-        attention_mask = Masking.convert_seq_to_patch_view(input_mask, self.patch_size).repeat_interleave(
-            n_channels, dim=0
-        )
+        attention_mask = Masking.convert_seq_to_patch_view(
+            input_mask,
+            self.patch_size,
+            stride=self.configs.patch_stride_len,
+        ).repeat_interleave(n_channels, dim=0)
         outputs = self.encoder(inputs_embeds=enc_in, attention_mask=attention_mask)
         enc_out = outputs.last_hidden_state
 

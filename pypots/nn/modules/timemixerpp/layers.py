@@ -16,15 +16,15 @@ from ..inception import InceptionBlockV1, InceptionTransBlockV1
 def FFT_for_Period(x, k=2):
     xf = torch.fft.rfft(x, dim=1)
     frequency_list = abs(xf).mean(0).mean(-1)
-    frequency_list[0] = 0
-    if len(frequency_list) < k:
-        k = len(frequency_list)
-    _, top_list = torch.topk(frequency_list, k)
-    top_list = top_list.detach().cpu().numpy()
-    period = x.shape[1] // top_list
-    index = np.where(period > 0)
-    top_list = top_list[index]
-    period = period[period > 0]
+    if len(frequency_list) <= 1:
+        top_list = np.array([1])
+        period = np.array([x.shape[1]])
+        return period, abs(xf).mean(-1)[:, :1], top_list
+
+    k = min(k, len(frequency_list) - 1)
+    _, top_list = torch.topk(frequency_list[1:], k)
+    top_list = (top_list + 1).detach().cpu().numpy()
+    period = np.maximum(x.shape[1] // top_list, 1)
     return period, abs(xf).mean(-1)[:, top_list], top_list
 
 

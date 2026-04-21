@@ -61,7 +61,7 @@ class BaseImputer(BaseModel):
         verbose: bool = True,
     ):
         super().__init__(
-            device="device",
+            device=device,
             enable_amp=enable_amp,
             saving_path=saving_path,
             model_saving_strategy=model_saving_strategy,

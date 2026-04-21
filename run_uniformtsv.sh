@@ -2,12 +2,32 @@
 
 hostname
 
+timestamp() {
+  date "+%Y-%m-%dT%H:%M:%S%z"
+}
+
+PYTHON_BIN="${PYTHON_BIN:-}"
+ENV_NAME="pypots"
+if [[ -z "$PYTHON_BIN" ]]; then
+  if [[ -x ".venv/bin/python" ]]; then
+    PYTHON_BIN=".venv/bin/python"
+  else
+    if [[ -z "$CONDA_DEFAULT_ENV" || "$CONDA_DEFAULT_ENV" != "$ENV_NAME" ]]; then
+      if ! command -v conda &>/dev/null; then echo "❌ Conda not found and .venv/bin/python is unavailable."; exit 1; fi
+      source activate "$ENV_NAME" || { echo "❌ Could not activate Conda env '$ENV_NAME'."; exit 1; }
+    fi
+    PYTHON_BIN="python"
+  fi
+fi
+echo "Using Python: ${PYTHON_BIN}"
+
 # ==================== GPU SELECTION (Template Style) ====================
 # 1) Expose only GPUs you're allowed to see (physical indices)
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 
 # 2) Choose a subset of the visible GPUs by *logical* indices ("" → CPU)
-USE_GPUS="1"        # e.g., "0" or "0,1"; set "" to force CPU
+USE_GPUS="${USE_GPUS:-1}"        # e.g., "0" or "0,1"; set "" to force CPU
+USE_MPS="${USE_MPS:-1}"          # set "" to force CPU on Apple Silicon
 
 # 3) Build DEVICE list and BACKEND tag
 DEVICE=()
@@ -17,40 +37,47 @@ if command -v nvidia-smi &>/dev/null && [[ -n "$CUDA_VISIBLE_DEVICES" ]] && [[ -
   for lg in "${SEL[@]}"; do DEVICE+=("cuda:${lg}"); done
   BACKEND="cuda"
 fi
-if [[ ${#DEVICE[@]} -eq 0 ]]; then DEVICE=("cpu"); BACKEND="cpu"; fi
+if [[ ${#DEVICE[@]} -eq 0 ]]; then
+  if [[ -n "$USE_MPS" ]] && "${PYTHON_BIN}" -c "import torch; raise SystemExit(0 if torch.backends.mps.is_available() else 1)" >/dev/null 2>&1; then
+    DEVICE=("mps")
+    BACKEND="mps"
+  else
+    DEVICE=("cpu")
+    BACKEND="cpu"
+  fi
+fi
 
 echo "Visible GPUs: ${CUDA_VISIBLE_DEVICES}"
 echo "Using devices: ${DEVICE[*]}"
 
-# ==================== ENV ====================
-ENV_NAME="pypots"
-if [[ -z "$CONDA_DEFAULT_ENV" || "$CONDA_DEFAULT_ENV" != "$ENV_NAME" ]]; then
-  if ! command -v conda &>/dev/null; then echo "❌ Conda not found."; exit 1; fi
-  source activate "$ENV_NAME" || { echo "❌ Could not activate Conda env '$ENV_NAME'."; exit 1; }
-fi
-
 # ==================== EXPERIMENT CONFIGS ====================
 MODEL="uniformtsv"
 
-DATASETS=("physionet_2012") # "beijing_multisite_air_quality" "italy_air_quality" "pems_traffic" "solar_alabama")
-MISSING_RATES=("0.3") #("0.1" "0.2" "0.3" "0.4" "0.5")
-BATCH_SIZES=("32")
-D_MODELS=("32")
-D_FFNS=("32")
-N_HEADS=("1")
-N_LAYERS=("1")
+read -ra DATASETS <<< "${DATASETS:-physionet_2012 appliances_energy household_power citylearn_zone5 opsd_germany}"
+read -ra MISSING_RATES <<< "${MISSING_RATES:-0.1 0.3 0.5}"
+read -ra BATCH_SIZES <<< "${BATCH_SIZES:-32}"
+read -ra D_MODELS <<< "${D_MODELS:-64}"
+read -ra D_FFNS <<< "${D_FFNS:-128}"
+read -ra N_HEADS <<< "${N_HEADS:-4}"
+read -ra N_LAYERS <<< "${N_LAYERS:-2}"
 
 ENABLE_PROFILING_VALUES=("true")
 
 # Paths (device-aware)
 ROOT_OUT="output/imputation/${BACKEND}"
 PROFILING_PATH="${ROOT_OUT}/profiling"
-PROFILING_PREFIX="backbone_saits"
+PROFILING_PREFIX="backbone_uniformtsv"
 mkdir -p "${ROOT_OUT}" "${PROFILING_PATH}"
 
 # Fixed
-EPOCH=15
-PATIENCE=5
+EPOCH="${EPOCH:-50}"
+PATIENCE="${PATIENCE:-10}"
+PATCH_SIZE="${PATCH_SIZE:-12}"
+PATCH_STRIDE="${PATCH_STRIDE:-12}"
+LEARNING_RATE="${LEARNING_RATE:-0.001}"
+WEIGHT_DECAY="${WEIGHT_DECAY:-0.0001}"
+MAX_SAMPLES="${MAX_SAMPLES:-20000}"
+WINDOW_STRIDE="${WINDOW_STRIDE:-4}"
 
 # Session log
 SESSION_TAG="$(date +%Y%m%dT%H%M%S)"
@@ -62,6 +89,10 @@ set_dims_for_dataset () {
   local ds="$1"
   case "$ds" in
     "physionet_2012") N_STEPS=48;  N_FEATURES=35 ;;
+    "appliances_energy") N_STEPS=72; N_FEATURES=32 ;;
+    "household_power") N_STEPS=168; N_FEATURES=11 ;;
+    "citylearn_zone5") N_STEPS=168; N_FEATURES=20 ;;
+    "opsd_germany") N_STEPS=168; N_FEATURES=10 ;;
     "etth1"|"etth2"|"ettm1"|"ettm2") N_STEPS=96;  N_FEATURES=7  ;;
     "air_quality"|"beijing_multisite_air_quality"|"italy_air_quality") N_STEPS=48; N_FEATURES=36 ;;
     "pems_traffic")   N_STEPS=96;  N_FEATURES=228 ;;
@@ -108,7 +139,7 @@ for DATASET in "${DATASETS[@]}"; do
 
                 echo "🔥 RUN: ${MODEL} | ${DATASET} | ${RUN_TAG} (DEVICE=${DEVICE[*]}, N_STEPS=${N_STEPS}, N_FEATURES=${N_FEATURES}, d_k=${D_K}, d_v=${D_V})" | tee -a "${SESSION_LOG}"
 
-                cmd=(python main.py
+                cmd=("${PYTHON_BIN}" main.py
                   --model "${MODEL}"
                   --dataset_name "${DATASET}"
                   --epochs "${EPOCH}"
@@ -125,13 +156,19 @@ for DATASET in "${DATASETS[@]}"; do
                   --d_k "${D_K}"
                   --d_v "${D_V}"
                   --batch_size "${BATCH_SIZE}"
+                  --patch_size "${PATCH_SIZE}"
+                  --patch_stride "${PATCH_STRIDE}"
+                  --learning_rate "${LEARNING_RATE}"
+                  --weight_decay "${WEIGHT_DECAY}"
+                  --max_samples "${MAX_SAMPLES}"
+                  --window_stride "${WINDOW_STRIDE}"
                   --enable_profiling "${ENABLE_PROFILING}"
                   --profiling_path "${PROFILING_PATH}"
                   --profiling_prefix "${PROFILING_PREFIX}"
                 )
 
                 {
-                  echo "===== CMD @ $(date -Is) =====" >> "${RUN_LOG}"
+                  echo "===== CMD @ $(timestamp) =====" >> "${RUN_LOG}"
                   printf '%q ' "${cmd[@]}" >> "${RUN_LOG}"; echo >> "${RUN_LOG}"
                   echo "================================" >> "${RUN_LOG}"
 
@@ -159,4 +196,4 @@ for DATASET in "${DATASETS[@]}"; do
   done
 done
 
-echo "✅ All ${MODEL} runs completed at $(date -Is)."
+echo "✅ All ${MODEL} runs completed at $(timestamp)."

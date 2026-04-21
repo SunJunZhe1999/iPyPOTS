@@ -98,6 +98,7 @@ class _UniFormTSV(ModelCore):
 
         # UniFormTSV backbone processing
         reconstruction = self.backbone(input_X, input_mask=input_mask).reconstruction
+        reconstruction = reconstruction[:, :, : self.n_steps]
         # print(f"reconstruction.shape {reconstruction.shape}")
         reconstruction = reconstruction.permute(0, 2, 1)
         # print(f"reconstruction.shape {reconstruction.shape}")

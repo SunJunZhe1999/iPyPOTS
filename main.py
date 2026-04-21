@@ -25,6 +25,11 @@ from pipeline.imputations.tefn import train_and_evaluate_tefn
 from pipeline.imputations.tslanet import train_and_evaluate_tslanet
 from pipeline.imputations.gpt4ts import train_and_evaluate_gpt4ts
 from pipeline.imputations.timemixerpp import train_and_evaluate_timemixerpp
+from pipeline.imputations.baselines import (
+    train_and_evaluate_locf,
+    train_and_evaluate_mean,
+    train_and_evaluate_median,
+)
 
 from pypots.data.dataset.load_prepare_dataset import DatasetPreparator
 from pypots.utils.random import set_random_seed
@@ -42,6 +47,9 @@ MODEL_PIPELINES = {
     "saits": train_and_evaluate_saits,
     "timemixerpp": train_and_evaluate_timemixerpp,
     "moment": train_and_evaluate_moment,
+    "mean": train_and_evaluate_mean,
+    "median": train_and_evaluate_median,
+    "locf": train_and_evaluate_locf,
 }
 
 
@@ -74,5 +82,5 @@ if __name__ == "__main__":
     print(f"Use Train GPT: {args.train_gpt_mlp}")
     print(f"Use Lora: {args.use_lora}")
     print(f"Use Profiling: {args.enable_profiling}")
-    set_random_seed(2025)
+    set_random_seed(args.random_seed)
     main(args)
