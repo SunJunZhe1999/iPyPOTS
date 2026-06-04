@@ -1,0 +1,101 @@
+2026-06-04 06:15:41 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 06:15:41 [INFO]: You're using dataset electricity_load_diagrams, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/electricity_load_diagrams
+2026-06-04 06:15:41 [INFO]: Dataset electricity_load_diagrams has already been downloaded. Processing directly...
+2026-06-04 06:15:41 [INFO]: Dataset electricity_load_diagrams has already been cached. Loading from cache directly...
+2026-06-04 06:15:42 [INFO]: Loaded successfully!
+2026-06-04 06:15:42 [INFO]: months selected as test set are <PeriodArray>
+['2011-01', '2011-02', '2011-03', '2011-04', '2011-05', '2011-06', '2011-07',
+ '2011-08', '2011-09', '2011-10']
+Length: 10, dtype: period[M]
+2026-06-04 06:15:42 [INFO]: months selected as val set are <PeriodArray>
+['2011-11', '2011-12', '2012-01', '2012-02', '2012-03', '2012-04', '2012-05',
+ '2012-06', '2012-07', '2012-08']
+Length: 10, dtype: period[M]
+2026-06-04 06:15:42 [INFO]: months selected as train set are <PeriodArray>
+['2012-09', '2012-10', '2012-11', '2012-12', '2013-01', '2013-02', '2013-03',
+ '2013-04', '2013-05', '2013-06', '2013-07', '2013-08', '2013-09', '2013-10',
+ '2013-11', '2013-12', '2014-01', '2014-02', '2014-03', '2014-04', '2014-05',
+ '2014-06', '2014-07', '2014-08', '2014-09', '2014-10', '2014-11', '2014-12',
+ '2015-01']
+Length: 29, dtype: period[M]
+2026-06-04 06:15:44 [INFO]: Total sample number: 5843
+2026-06-04 06:15:44 [INFO]: Training set size: 3408 (58.33%)
+2026-06-04 06:15:44 [INFO]: Validation set size: 1220 (20.88%)
+2026-06-04 06:15:44 [INFO]: Test set size: 1215 (20.79%)
+2026-06-04 06:15:44 [INFO]: Number of steps: 24
+2026-06-04 06:15:44 [INFO]: Number of features: 370
+2026-06-04 06:15:44 [INFO]: Train set missing rate: 50.00%
+2026-06-04 06:15:44 [INFO]: Validating set missing rate: 50.01%
+2026-06-04 06:15:44 [INFO]: Test set missing rate: 50.00%
+2026-06-04 06:15:44 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 06:15:44 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 06:15:44 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/gpt4ts/eld/mr0.5/seed123
+2026-06-04 06:15:44 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/gpt4ts/eld/mr0.5/seed123/tensorboard
+2026-06-04 06:15:44 [INFO]: Using customized MAE as the training loss function.
+2026-06-04 06:15:44 [INFO]: Using customized MSE as the validation metric function.
+2026-06-04 06:15:46 [INFO]: Model placed on cuda:0
+2026-06-04 06:15:46 [INFO]: GPT4TS initialized with the given hyperparameters.
+ ├─ Total parameters: 54,758,002
+ ├─ Trainable parameters: 1,932,658
+ └─ Trainable ratio: 3.53%
+2026-06-04 06:15:47 [ERROR]: ❌ Exception: `predictions` mustn't contain NaN values, but detected NaN in it
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: gpt4ts
+✅ Dataset 'eld' with missing rate 0.5 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.5
+🚀 Starting GPT4TS training pipeline...
+Traceback (most recent call last):
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/base.py", line 756, in _train_model
+    results = self.model(inputs, calc_criterion=True)
+  File "/home/Aboya_25R9803/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/Aboya_25R9803/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/imputation/gpt4ts/core.py", line 78, in forward
+    loss = self.training_loss(reconstruction, X_ori, indicating_mask)
+  File "/home/Aboya_25R9803/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/Aboya_25R9803/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/nn/modules/loss.py", line 81, in forward
+    value = calc_mae(logits, targets, masks)
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/nn/functional/error.py", line 98, in calc_mae
+    lib = _check_inputs(predictions, targets, masks)
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/nn/functional/error.py", line 34, in _check_inputs
+    assert not lib.isnan(predictions).any(), "`predictions` mustn't contain NaN values, but detected NaN in it"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: `predictions` mustn't contain NaN values, but detected NaN in it
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/main.py", line 98, in <module>
+    main(args)
+    ~~~~^^^^^^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/main.py", line 72, in main
+    mae, mse, rmse, mre = MODEL_PIPELINES[model_name](dataset, args)
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pipeline/imputations/gpt4ts.py", line 58, in train_and_evaluate_gpt4ts
+    gpt4ts.fit(train_set=train_set, val_set=val_set)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/imputation/gpt4ts/model.py", line 259, in fit
+    self._train_model(train_dataloader, val_dataloader)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/base.py", line 833, in _train_model
+    raise RuntimeError(
+        "Training got interrupted. Model was not trained. Please investigate the error printed above."
+    )
+RuntimeError: Training got interrupted. Model was not trained. Please investigate the error printed above.

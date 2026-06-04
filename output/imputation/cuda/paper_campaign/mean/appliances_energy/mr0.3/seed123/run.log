@@ -1,0 +1,20 @@
+2026-06-04 07:48:20 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 07:48:21 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 07:48:21 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: mean
+✅ Dataset 'appliances_energy' with missing rate 0.3 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.3
+🚀 Starting Mean imputation baseline...
+[Mean] Testing —— MAE: 0.7471| MSE: 0.8864| RMSE: 0.9415| MRE: 0.7411| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/mean/appliances_energy/mr0.3/seed123/metrics/mean_metrics.json

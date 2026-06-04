@@ -1,0 +1,49 @@
+2026-06-04 04:44:26 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 04:44:26 [INFO]: You're using dataset electricity_load_diagrams, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/electricity_load_diagrams
+2026-06-04 04:44:26 [INFO]: Dataset electricity_load_diagrams has already been downloaded. Processing directly...
+2026-06-04 04:44:26 [INFO]: Dataset electricity_load_diagrams has already been cached. Loading from cache directly...
+2026-06-04 04:44:26 [INFO]: Loaded successfully!
+2026-06-04 04:44:26 [INFO]: months selected as test set are <PeriodArray>
+['2011-01', '2011-02', '2011-03', '2011-04', '2011-05', '2011-06', '2011-07',
+ '2011-08', '2011-09', '2011-10']
+Length: 10, dtype: period[M]
+2026-06-04 04:44:26 [INFO]: months selected as val set are <PeriodArray>
+['2011-11', '2011-12', '2012-01', '2012-02', '2012-03', '2012-04', '2012-05',
+ '2012-06', '2012-07', '2012-08']
+Length: 10, dtype: period[M]
+2026-06-04 04:44:26 [INFO]: months selected as train set are <PeriodArray>
+['2012-09', '2012-10', '2012-11', '2012-12', '2013-01', '2013-02', '2013-03',
+ '2013-04', '2013-05', '2013-06', '2013-07', '2013-08', '2013-09', '2013-10',
+ '2013-11', '2013-12', '2014-01', '2014-02', '2014-03', '2014-04', '2014-05',
+ '2014-06', '2014-07', '2014-08', '2014-09', '2014-10', '2014-11', '2014-12',
+ '2015-01']
+Length: 29, dtype: period[M]
+2026-06-04 04:44:28 [INFO]: Total sample number: 5843
+2026-06-04 04:44:28 [INFO]: Training set size: 3408 (58.33%)
+2026-06-04 04:44:28 [INFO]: Validation set size: 1220 (20.88%)
+2026-06-04 04:44:28 [INFO]: Test set size: 1215 (20.79%)
+2026-06-04 04:44:28 [INFO]: Number of steps: 24
+2026-06-04 04:44:28 [INFO]: Number of features: 370
+2026-06-04 04:44:28 [INFO]: Train set missing rate: 50.00%
+2026-06-04 04:44:28 [INFO]: Validating set missing rate: 50.01%
+2026-06-04 04:44:28 [INFO]: Test set missing rate: 50.00%
+2026-06-04 04:44:28 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 04:44:28 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: median
+✅ Dataset 'eld' with missing rate 0.5 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.5
+🚀 Starting Median imputation baseline...
+[Median] Testing —— MAE: 0.4076| MSE: 0.6250| RMSE: 0.7905| MRE: 0.2183| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/median/eld/mr0.5/seed123/metrics/median_metrics.json

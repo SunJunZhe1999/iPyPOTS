@@ -1,0 +1,91 @@
+2026-06-04 08:46:55 [INFO]: Have set the random seed as 456 for numpy and pytorch.
+2026-06-04 08:46:56 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 08:46:56 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 08:46:56 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/gpt4ts/appliances_energy/mr0.3/seed456
+2026-06-04 08:46:56 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/gpt4ts/appliances_energy/mr0.3/seed456/tensorboard
+2026-06-04 08:46:56 [INFO]: Using customized MAE as the training loss function.
+2026-06-04 08:46:56 [INFO]: Using customized MSE as the validation metric function.
+2026-06-04 08:46:58 [INFO]: Model placed on cuda:0
+2026-06-04 08:46:58 [INFO]: GPT4TS initialized with the given hyperparameters.
+ ├─ Total parameters: 53,719,328
+ ├─ Trainable parameters: 893,984
+ └─ Trainable ratio: 1.66%
+2026-06-04 08:47:03 [INFO]: Epoch 001 - training loss (MAE): 0.2736, validation MSE: 0.1423
+2026-06-04 08:47:06 [INFO]: Epoch 002 - training loss (MAE): 0.2003, validation MSE: 0.1015
+2026-06-04 08:47:10 [INFO]: Epoch 003 - training loss (MAE): 0.1696, validation MSE: 0.0833
+2026-06-04 08:47:13 [INFO]: Epoch 004 - training loss (MAE): 0.1526, validation MSE: 0.0756
+2026-06-04 08:47:16 [INFO]: Epoch 005 - training loss (MAE): 0.1432, validation MSE: 0.0723
+2026-06-04 08:47:20 [INFO]: Epoch 006 - training loss (MAE): 0.1366, validation MSE: 0.0700
+2026-06-04 08:47:23 [INFO]: Epoch 007 - training loss (MAE): 0.1323, validation MSE: 0.0692
+2026-06-04 08:47:27 [INFO]: Epoch 008 - training loss (MAE): 0.1290, validation MSE: 0.0683
+2026-06-04 08:47:30 [INFO]: Epoch 009 - training loss (MAE): 0.1268, validation MSE: 0.0678
+2026-06-04 08:47:34 [INFO]: Epoch 010 - training loss (MAE): 0.1249, validation MSE: 0.0671
+2026-06-04 08:47:37 [INFO]: Epoch 011 - training loss (MAE): 0.1227, validation MSE: 0.0670
+2026-06-04 08:47:40 [INFO]: Epoch 012 - training loss (MAE): 0.1207, validation MSE: 0.0667
+2026-06-04 08:47:44 [INFO]: Epoch 013 - training loss (MAE): 0.1197, validation MSE: 0.0665
+2026-06-04 08:47:47 [INFO]: Epoch 014 - training loss (MAE): 0.1189, validation MSE: 0.0662
+2026-06-04 08:47:51 [INFO]: Epoch 015 - training loss (MAE): 0.1177, validation MSE: 0.0660
+2026-06-04 08:47:54 [INFO]: Epoch 016 - training loss (MAE): 0.1170, validation MSE: 0.0658
+2026-06-04 08:47:57 [INFO]: Epoch 017 - training loss (MAE): 0.1162, validation MSE: 0.0654
+2026-06-04 08:48:01 [INFO]: Epoch 018 - training loss (MAE): 0.1150, validation MSE: 0.0653
+2026-06-04 08:48:04 [INFO]: Epoch 019 - training loss (MAE): 0.1143, validation MSE: 0.0653
+2026-06-04 08:48:08 [INFO]: Epoch 020 - training loss (MAE): 0.1138, validation MSE: 0.0652
+2026-06-04 08:48:11 [INFO]: Epoch 021 - training loss (MAE): 0.1128, validation MSE: 0.0649
+2026-06-04 08:48:14 [INFO]: Epoch 022 - training loss (MAE): 0.1121, validation MSE: 0.0646
+2026-06-04 08:48:18 [INFO]: Epoch 023 - training loss (MAE): 0.1115, validation MSE: 0.0646
+2026-06-04 08:48:21 [INFO]: Epoch 024 - training loss (MAE): 0.1110, validation MSE: 0.0643
+2026-06-04 08:48:24 [INFO]: Epoch 025 - training loss (MAE): 0.1105, validation MSE: 0.0642
+2026-06-04 08:48:27 [INFO]: Epoch 026 - training loss (MAE): 0.1102, validation MSE: 0.0639
+2026-06-04 08:48:31 [INFO]: Epoch 027 - training loss (MAE): 0.1096, validation MSE: 0.0635
+2026-06-04 08:48:34 [INFO]: Epoch 028 - training loss (MAE): 0.1092, validation MSE: 0.0634
+2026-06-04 08:48:37 [INFO]: Epoch 029 - training loss (MAE): 0.1088, validation MSE: 0.0635
+2026-06-04 08:48:40 [INFO]: Epoch 030 - training loss (MAE): 0.1083, validation MSE: 0.0633
+2026-06-04 08:48:43 [INFO]: Epoch 031 - training loss (MAE): 0.1082, validation MSE: 0.0632
+2026-06-04 08:48:46 [INFO]: Epoch 032 - training loss (MAE): 0.1074, validation MSE: 0.0633
+2026-06-04 08:48:49 [INFO]: Epoch 033 - training loss (MAE): 0.1077, validation MSE: 0.0626
+2026-06-04 08:48:52 [INFO]: Epoch 034 - training loss (MAE): 0.1069, validation MSE: 0.0628
+2026-06-04 08:48:55 [INFO]: Epoch 035 - training loss (MAE): 0.1070, validation MSE: 0.0628
+2026-06-04 08:48:58 [INFO]: Epoch 036 - training loss (MAE): 0.1066, validation MSE: 0.0624
+2026-06-04 08:49:01 [INFO]: Epoch 037 - training loss (MAE): 0.1065, validation MSE: 0.0623
+2026-06-04 08:49:04 [INFO]: Epoch 038 - training loss (MAE): 0.1059, validation MSE: 0.0620
+2026-06-04 08:49:07 [INFO]: Epoch 039 - training loss (MAE): 0.1053, validation MSE: 0.0621
+2026-06-04 08:49:10 [INFO]: Epoch 040 - training loss (MAE): 0.1055, validation MSE: 0.0623
+2026-06-04 08:49:14 [INFO]: Epoch 041 - training loss (MAE): 0.1047, validation MSE: 0.0618
+2026-06-04 08:49:17 [INFO]: Epoch 042 - training loss (MAE): 0.1049, validation MSE: 0.0619
+2026-06-04 08:49:20 [INFO]: Epoch 043 - training loss (MAE): 0.1049, validation MSE: 0.0618
+2026-06-04 08:49:24 [INFO]: Epoch 044 - training loss (MAE): 0.1044, validation MSE: 0.0616
+2026-06-04 08:49:27 [INFO]: Epoch 045 - training loss (MAE): 0.1041, validation MSE: 0.0615
+2026-06-04 08:49:30 [INFO]: Epoch 046 - training loss (MAE): 0.1042, validation MSE: 0.0615
+2026-06-04 08:49:33 [INFO]: Epoch 047 - training loss (MAE): 0.1036, validation MSE: 0.0613
+2026-06-04 08:49:36 [INFO]: Epoch 048 - training loss (MAE): 0.1032, validation MSE: 0.0613
+2026-06-04 08:49:39 [INFO]: Epoch 049 - training loss (MAE): 0.1037, validation MSE: 0.0612
+2026-06-04 08:49:42 [INFO]: Epoch 050 - training loss (MAE): 0.1034, validation MSE: 0.0613
+2026-06-04 08:49:45 [INFO]: Epoch 051 - training loss (MAE): 0.1032, validation MSE: 0.0610
+2026-06-04 08:49:48 [INFO]: Epoch 052 - training loss (MAE): 0.1028, validation MSE: 0.0610
+2026-06-04 08:49:51 [INFO]: Epoch 053 - training loss (MAE): 0.1024, validation MSE: 0.0609
+2026-06-04 08:49:54 [INFO]: Epoch 054 - training loss (MAE): 0.1027, validation MSE: 0.0608
+2026-06-04 08:49:57 [INFO]: Epoch 055 - training loss (MAE): 0.1023, validation MSE: 0.0608
+2026-06-04 08:50:00 [INFO]: Epoch 056 - training loss (MAE): 0.1021, validation MSE: 0.0607
+2026-06-04 08:50:03 [INFO]: Epoch 057 - training loss (MAE): 0.1020, validation MSE: 0.0607
+2026-06-04 08:50:06 [INFO]: Epoch 058 - training loss (MAE): 0.1022, validation MSE: 0.0604
+2026-06-04 08:50:09 [INFO]: Epoch 059 - training loss (MAE): 0.1020, validation MSE: 0.0607
+2026-06-04 08:50:13 [INFO]: Epoch 060 - training loss (MAE): 0.1019, validation MSE: 0.0606
+2026-06-04 08:50:13 [INFO]: Finished training. The best model is from epoch#58.
+2026-06-04 08:50:13 [INFO]: Saved the model to output/imputation/cuda/paper_campaign/gpt4ts/appliances_energy/mr0.3/seed456/GPT4TS.pypots
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: gpt4ts
+✅ Dataset 'appliances_energy' with missing rate 0.3 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.3
+🚀 Starting GPT4TS training pipeline...
+[GPT4TS] Testing —— MAE: 0.1112| MSE: 0.0596| RMSE: 0.2442| MRE: 0.1104| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/gpt4ts/appliances_energy/mr0.3/seed456/metrics/gpt4ts_metrics.json

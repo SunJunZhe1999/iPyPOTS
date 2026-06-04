@@ -1,0 +1,44 @@
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+2026-06-04 13:10:42 [INFO]: Have set the random seed as 42 for numpy and pytorch.
+🚀 Running imputation pipeline for model: median
+2026-06-04 13:10:42 [INFO]: You're using dataset electricity_transformer_temperature, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/electricity_transformer_temperature
+2026-06-04 13:10:42 [INFO]: Dataset electricity_transformer_temperature has already been downloaded. Processing directly...
+2026-06-04 13:10:42 [INFO]: Dataset electricity_transformer_temperature has already been cached. Loading from cache directly...
+2026-06-04 13:10:42 [INFO]: Loaded successfully!
+2026-06-04 13:10:42 [INFO]: months selected as train set are <PeriodArray>
+['2016-07', '2016-08', '2016-09', '2016-10', '2016-11', '2016-12', '2017-01',
+ '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
+Length: 14, dtype: period[M]
+2026-06-04 13:10:42 [INFO]: months selected as val set are <PeriodArray>
+['2017-09', '2017-10', '2017-11', '2017-12', '2018-01']
+Length: 5, dtype: period[M]
+2026-06-04 13:10:42 [INFO]: months selected as test set are <PeriodArray>
+['2018-02', '2018-03', '2018-04', '2018-05', '2018-06']
+Length: 5, dtype: period[M]
+2026-06-04 13:10:42 [INFO]: Total sample number: 180
+2026-06-04 13:10:42 [INFO]: Training set size: 106 (58.89%)
+2026-06-04 13:10:42 [INFO]: Validation set size: 38 (21.11%)
+2026-06-04 13:10:42 [INFO]: Test set size: 36 (20.00%)
+2026-06-04 13:10:42 [INFO]: Number of steps: 96
+2026-06-04 13:10:42 [INFO]: Number of features: 7
+2026-06-04 13:10:42 [INFO]: Train set missing rate: 10.04%
+2026-06-04 13:10:42 [INFO]: Validating set missing rate: 10.00%
+2026-06-04 13:10:42 [INFO]: Test set missing rate: 10.10%
+✅ Dataset 'etth1' with missing rate 0.1 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.1
+🚀 Starting Median imputation baseline...
+2026-06-04 13:10:42 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 13:10:43 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[Median] Testing —— MAE: 0.6994| MSE: 0.9974| RMSE: 0.9987| MRE: 0.8421| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/median/etth1/mr0.1/seed42/metrics/median_metrics.json

@@ -1,0 +1,81 @@
+2026-06-04 04:57:21 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 04:57:21 [INFO]: You're using dataset electricity_transformer_temperature, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/electricity_transformer_temperature
+2026-06-04 04:57:21 [INFO]: Dataset electricity_transformer_temperature has already been downloaded. Processing directly...
+2026-06-04 04:57:21 [INFO]: Dataset electricity_transformer_temperature has already been cached. Loading from cache directly...
+2026-06-04 04:57:21 [INFO]: Loaded successfully!
+2026-06-04 04:57:21 [INFO]: months selected as train set are <PeriodArray>
+['2016-07', '2016-08', '2016-09', '2016-10', '2016-11', '2016-12', '2017-01',
+ '2017-02', '2017-03', '2017-04', '2017-05', '2017-06', '2017-07', '2017-08']
+Length: 14, dtype: period[M]
+2026-06-04 04:57:21 [INFO]: months selected as val set are <PeriodArray>
+['2017-09', '2017-10', '2017-11', '2017-12', '2018-01']
+Length: 5, dtype: period[M]
+2026-06-04 04:57:21 [INFO]: months selected as test set are <PeriodArray>
+['2018-02', '2018-03', '2018-04', '2018-05', '2018-06']
+Length: 5, dtype: period[M]
+2026-06-04 04:57:21 [INFO]: Total sample number: 725
+2026-06-04 04:57:21 [INFO]: Training set size: 427 (58.90%)
+2026-06-04 04:57:21 [INFO]: Validation set size: 153 (21.10%)
+2026-06-04 04:57:21 [INFO]: Test set size: 145 (20.00%)
+2026-06-04 04:57:21 [INFO]: Number of steps: 96
+2026-06-04 04:57:21 [INFO]: Number of features: 7
+2026-06-04 04:57:21 [INFO]: Train set missing rate: 9.95%
+2026-06-04 04:57:21 [INFO]: Validating set missing rate: 9.96%
+2026-06-04 04:57:21 [INFO]: Test set missing rate: 9.91%
+2026-06-04 04:57:21 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 04:57:21 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 04:57:22 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/timemixerpp/ettm1/mr0.1/seed123
+2026-06-04 04:57:22 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/timemixerpp/ettm1/mr0.1/seed123/tensorboard
+2026-06-04 04:57:22 [INFO]: Using customized MAE as the training loss function.
+2026-06-04 04:57:22 [INFO]: Using customized MSE as the validation metric function.
+2026-06-04 04:57:23 [INFO]: Model placed on cuda:0
+2026-06-04 04:57:23 [INFO]: TimeMixerPP initialized with the given hyperparameters.
+ ├─ Total parameters: 18,837,061
+ ├─ Trainable parameters: 18,832,197
+ └─ Trainable ratio: 99.97%
+2026-06-04 04:57:37 [INFO]: Epoch 001 - training loss (MAE): 0.6397, validation MSE: 3.1266
+2026-06-04 04:57:50 [INFO]: Epoch 002 - training loss (MAE): 0.9364, validation MSE: 0.6480
+2026-06-04 04:58:02 [INFO]: Epoch 003 - training loss (MAE): 0.5301, validation MSE: 0.3838
+2026-06-04 04:58:15 [INFO]: Epoch 004 - training loss (MAE): 0.4933, validation MSE: 0.4188
+2026-06-04 04:58:27 [INFO]: Epoch 005 - training loss (MAE): 0.4817, validation MSE: 0.3534
+2026-06-04 04:58:40 [INFO]: Epoch 006 - training loss (MAE): 0.4527, validation MSE: 0.4470
+2026-06-04 04:58:52 [INFO]: Epoch 007 - training loss (MAE): 0.4396, validation MSE: 0.3167
+2026-06-04 04:59:05 [INFO]: Epoch 008 - training loss (MAE): 0.4135, validation MSE: 0.4780
+2026-06-04 04:59:17 [INFO]: Epoch 009 - training loss (MAE): 0.4187, validation MSE: 0.2879
+2026-06-04 04:59:30 [INFO]: Epoch 010 - training loss (MAE): 0.3942, validation MSE: 0.3191
+2026-06-04 04:59:42 [INFO]: Epoch 011 - training loss (MAE): 0.3588, validation MSE: 0.3915
+2026-06-04 04:59:55 [INFO]: Epoch 012 - training loss (MAE): 0.3471, validation MSE: 0.3713
+2026-06-04 05:00:07 [INFO]: Epoch 013 - training loss (MAE): 0.3200, validation MSE: 0.2603
+2026-06-04 05:00:20 [INFO]: Epoch 014 - training loss (MAE): 0.3107, validation MSE: 0.2687
+2026-06-04 05:00:32 [INFO]: Epoch 015 - training loss (MAE): 0.2929, validation MSE: 0.3329
+2026-06-04 05:00:45 [INFO]: Epoch 016 - training loss (MAE): 0.2887, validation MSE: 0.2838
+2026-06-04 05:00:57 [INFO]: Epoch 017 - training loss (MAE): 0.2841, validation MSE: 0.2976
+2026-06-04 05:01:10 [INFO]: Epoch 018 - training loss (MAE): 0.2585, validation MSE: 0.3003
+2026-06-04 05:01:22 [INFO]: Epoch 019 - training loss (MAE): 0.2428, validation MSE: 0.3317
+2026-06-04 05:01:35 [INFO]: Epoch 020 - training loss (MAE): 0.2318, validation MSE: 0.3148
+2026-06-04 05:01:47 [INFO]: Epoch 021 - training loss (MAE): 0.2149, validation MSE: 0.2643
+2026-06-04 05:02:00 [INFO]: Epoch 022 - training loss (MAE): 0.2101, validation MSE: 0.2843
+2026-06-04 05:02:12 [INFO]: Epoch 023 - training loss (MAE): 0.1960, validation MSE: 0.3166
+2026-06-04 05:02:24 [INFO]: Epoch 024 - training loss (MAE): 0.1936, validation MSE: 0.3121
+2026-06-04 05:02:37 [INFO]: Epoch 025 - training loss (MAE): 0.1775, validation MSE: 0.2659
+2026-06-04 05:02:37 [INFO]: Exceeded the training patience. Terminating the training procedure...
+2026-06-04 05:02:37 [INFO]: Finished training. The best model is from epoch#13.
+2026-06-04 05:02:37 [INFO]: Saved the model to output/imputation/cuda/paper_campaign/timemixerpp/ettm1/mr0.1/seed123/TimeMixerPP.pypots
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: timemixerpp
+✅ Dataset 'ettm1' with missing rate 0.1 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.1
+🚀 Starting TimeMixer++ training pipeline...
+[TimeMixer++] Testing —— MAE: 0.4132| MSE: 0.3601| RMSE: 0.6001| MRE: 0.4892|
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/timemixerpp/ettm1/mr0.1/seed123/metrics/timemixerpp_metrics.json

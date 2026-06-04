@@ -1,0 +1,20 @@
+2026-06-04 04:44:05 [INFO]: Have set the random seed as 456 for numpy and pytorch.
+2026-06-04 04:44:08 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 04:44:08 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: median
+✅ Dataset 'opsd_germany' with missing rate 0.3 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.3
+🚀 Starting Median imputation baseline...
+[Median] Testing —— MAE: 0.8873| MSE: 1.2161| RMSE: 1.1028| MRE: 0.9777| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/median/opsd_germany/mr0.3/seed456/metrics/median_metrics.json

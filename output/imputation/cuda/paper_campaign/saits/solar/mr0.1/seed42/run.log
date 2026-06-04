@@ -1,0 +1,92 @@
+2026-06-04 06:03:02 [INFO]: Have set the random seed as 42 for numpy and pytorch.
+2026-06-04 06:03:02 [INFO]: You're using dataset solar_alabama, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/solar_alabama
+2026-06-04 06:03:02 [INFO]: Dataset solar_alabama has already been downloaded. Processing directly...
+2026-06-04 06:03:02 [INFO]: Dataset solar_alabama has already been cached. Loading from cache directly...
+2026-06-04 06:03:02 [INFO]: Loaded successfully!
+2026-06-04 06:03:02 [INFO]: months selected as train set are <PeriodArray>
+['2006-01', '2006-02', '2006-03', '2006-04', '2006-05', '2006-06']
+Length: 6, dtype: period[M]
+2026-06-04 06:03:02 [INFO]: months selected as val set are <PeriodArray>
+['2006-07', '2006-08', '2006-09']
+Length: 3, dtype: period[M]
+2026-06-04 06:03:02 [INFO]: months selected as test set are <PeriodArray>
+['2006-10', '2006-11', '2006-12']
+Length: 3, dtype: period[M]
+2026-06-04 06:03:02 [INFO]: Total sample number: 2190
+2026-06-04 06:03:02 [INFO]: Training set size: 1086 (49.59%)
+2026-06-04 06:03:02 [INFO]: Validation set size: 552 (25.21%)
+2026-06-04 06:03:02 [INFO]: Test set size: 552 (25.21%)
+2026-06-04 06:03:02 [INFO]: Number of steps: 24
+2026-06-04 06:03:02 [INFO]: Number of features: 137
+2026-06-04 06:03:02 [INFO]: Train set missing rate: 10.01%
+2026-06-04 06:03:02 [INFO]: Validating set missing rate: 10.00%
+2026-06-04 06:03:02 [INFO]: Test set missing rate: 10.04%
+2026-06-04 06:03:02 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 06:03:02 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 06:03:02 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/saits/solar/mr0.1/seed42
+2026-06-04 06:03:02 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/saits/solar/mr0.1/seed42/tensorboard
+2026-06-04 06:03:02 [INFO]: Using customized MAE as the training loss function.
+2026-06-04 06:03:02 [INFO]: Using customized MSE as the validation metric function.
+2026-06-04 06:03:02 [INFO]: SAITS initialized with the given hyperparameters.
+ ├─ Total parameters: 226,974
+ ├─ Trainable parameters: 226,974
+ └─ Trainable ratio: 100.00%
+2026-06-04 06:03:03 [INFO]: Model placed on cuda:0
+2026-06-04 06:03:04 [INFO]: Epoch 001 - training loss (MAE): 1.5411, validation MSE: 0.5921
+2026-06-04 06:03:04 [INFO]: Epoch 002 - training loss (MAE): 1.0863, validation MSE: 0.3531
+2026-06-04 06:03:05 [INFO]: Epoch 003 - training loss (MAE): 0.7932, validation MSE: 0.2395
+2026-06-04 06:03:05 [INFO]: Epoch 004 - training loss (MAE): 0.6727, validation MSE: 0.1826
+2026-06-04 06:03:05 [INFO]: Epoch 005 - training loss (MAE): 0.5724, validation MSE: 0.1521
+2026-06-04 06:03:06 [INFO]: Epoch 006 - training loss (MAE): 0.4957, validation MSE: 0.1059
+2026-06-04 06:03:06 [INFO]: Epoch 007 - training loss (MAE): 0.4348, validation MSE: 0.0899
+2026-06-04 06:03:07 [INFO]: Epoch 008 - training loss (MAE): 0.3933, validation MSE: 0.0926
+2026-06-04 06:03:07 [INFO]: Epoch 009 - training loss (MAE): 0.3773, validation MSE: 0.0819
+2026-06-04 06:03:07 [INFO]: Epoch 010 - training loss (MAE): 0.3589, validation MSE: 0.0790
+2026-06-04 06:03:08 [INFO]: Epoch 011 - training loss (MAE): 0.3546, validation MSE: 0.0785
+2026-06-04 06:03:08 [INFO]: Epoch 012 - training loss (MAE): 0.3452, validation MSE: 0.0782
+2026-06-04 06:03:09 [INFO]: Epoch 013 - training loss (MAE): 0.3346, validation MSE: 0.0809
+2026-06-04 06:03:10 [INFO]: Epoch 014 - training loss (MAE): 0.3304, validation MSE: 0.0822
+2026-06-04 06:03:10 [INFO]: Epoch 015 - training loss (MAE): 0.3161, validation MSE: 0.0819
+2026-06-04 06:03:12 [INFO]: Epoch 016 - training loss (MAE): 0.3176, validation MSE: 0.0805
+2026-06-04 06:03:12 [INFO]: Epoch 017 - training loss (MAE): 0.3153, validation MSE: 0.0783
+2026-06-04 06:03:12 [INFO]: Epoch 018 - training loss (MAE): 0.3025, validation MSE: 0.0766
+2026-06-04 06:03:13 [INFO]: Epoch 019 - training loss (MAE): 0.3064, validation MSE: 0.0830
+2026-06-04 06:03:13 [INFO]: Epoch 020 - training loss (MAE): 0.2994, validation MSE: 0.0845
+2026-06-04 06:03:14 [INFO]: Epoch 021 - training loss (MAE): 0.3031, validation MSE: 0.0807
+2026-06-04 06:03:14 [INFO]: Epoch 022 - training loss (MAE): 0.3208, validation MSE: 0.0775
+2026-06-04 06:03:14 [INFO]: Epoch 023 - training loss (MAE): 0.2900, validation MSE: 0.0822
+2026-06-04 06:03:14 [INFO]: Epoch 024 - training loss (MAE): 0.2936, validation MSE: 0.0775
+2026-06-04 06:03:15 [INFO]: Epoch 025 - training loss (MAE): 0.2987, validation MSE: 0.0763
+2026-06-04 06:03:15 [INFO]: Epoch 026 - training loss (MAE): 0.2868, validation MSE: 0.0794
+2026-06-04 06:03:15 [INFO]: Epoch 027 - training loss (MAE): 0.2974, validation MSE: 0.0834
+2026-06-04 06:03:16 [INFO]: Epoch 028 - training loss (MAE): 0.2932, validation MSE: 0.0801
+2026-06-04 06:03:16 [INFO]: Epoch 029 - training loss (MAE): 0.2990, validation MSE: 0.0776
+2026-06-04 06:03:17 [INFO]: Epoch 030 - training loss (MAE): 0.2826, validation MSE: 0.0778
+2026-06-04 06:03:17 [INFO]: Epoch 031 - training loss (MAE): 0.2998, validation MSE: 0.0805
+2026-06-04 06:03:17 [INFO]: Epoch 032 - training loss (MAE): 0.2853, validation MSE: 0.0776
+2026-06-04 06:03:18 [INFO]: Epoch 033 - training loss (MAE): 0.2791, validation MSE: 0.0787
+2026-06-04 06:03:18 [INFO]: Epoch 034 - training loss (MAE): 0.2899, validation MSE: 0.0787
+2026-06-04 06:03:19 [INFO]: Epoch 035 - training loss (MAE): 0.2901, validation MSE: 0.0774
+2026-06-04 06:03:19 [INFO]: Epoch 036 - training loss (MAE): 0.2857, validation MSE: 0.0821
+2026-06-04 06:03:19 [INFO]: Epoch 037 - training loss (MAE): 0.2895, validation MSE: 0.0777
+2026-06-04 06:03:19 [INFO]: Exceeded the training patience. Terminating the training procedure...
+2026-06-04 06:03:19 [INFO]: Finished training. The best model is from epoch#25.
+2026-06-04 06:03:19 [INFO]: Saved the model to output/imputation/cuda/paper_campaign/saits/solar/mr0.1/seed42/SAITS.pypots
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: saits
+✅ Dataset 'solar' with missing rate 0.1 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.1
+🚀 Starting SAITS training pipeline...
+[SAITS] Testing —— MAE: 0.1132| MSE: 0.0628| RMSE: 0.2507| MRE: 0.1463| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/saits/solar/mr0.1/seed42/metrics/saits_metrics.json

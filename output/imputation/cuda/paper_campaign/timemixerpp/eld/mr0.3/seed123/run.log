@@ -1,0 +1,90 @@
+2026-06-04 05:13:41 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 05:13:41 [INFO]: You're using dataset electricity_load_diagrams, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/electricity_load_diagrams
+2026-06-04 05:13:41 [INFO]: Dataset electricity_load_diagrams has already been downloaded. Processing directly...
+2026-06-04 05:13:41 [INFO]: Dataset electricity_load_diagrams has already been cached. Loading from cache directly...
+2026-06-04 05:13:41 [INFO]: Loaded successfully!
+2026-06-04 05:13:41 [INFO]: months selected as test set are <PeriodArray>
+['2011-01', '2011-02', '2011-03', '2011-04', '2011-05', '2011-06', '2011-07',
+ '2011-08', '2011-09', '2011-10']
+Length: 10, dtype: period[M]
+2026-06-04 05:13:41 [INFO]: months selected as val set are <PeriodArray>
+['2011-11', '2011-12', '2012-01', '2012-02', '2012-03', '2012-04', '2012-05',
+ '2012-06', '2012-07', '2012-08']
+Length: 10, dtype: period[M]
+2026-06-04 05:13:41 [INFO]: months selected as train set are <PeriodArray>
+['2012-09', '2012-10', '2012-11', '2012-12', '2013-01', '2013-02', '2013-03',
+ '2013-04', '2013-05', '2013-06', '2013-07', '2013-08', '2013-09', '2013-10',
+ '2013-11', '2013-12', '2014-01', '2014-02', '2014-03', '2014-04', '2014-05',
+ '2014-06', '2014-07', '2014-08', '2014-09', '2014-10', '2014-11', '2014-12',
+ '2015-01']
+Length: 29, dtype: period[M]
+2026-06-04 05:13:43 [INFO]: Total sample number: 5843
+2026-06-04 05:13:43 [INFO]: Training set size: 3408 (58.33%)
+2026-06-04 05:13:43 [INFO]: Validation set size: 1220 (20.88%)
+2026-06-04 05:13:43 [INFO]: Test set size: 1215 (20.79%)
+2026-06-04 05:13:43 [INFO]: Number of steps: 24
+2026-06-04 05:13:43 [INFO]: Number of features: 370
+2026-06-04 05:13:43 [INFO]: Train set missing rate: 30.00%
+2026-06-04 05:13:43 [INFO]: Validating set missing rate: 30.01%
+2026-06-04 05:13:43 [INFO]: Test set missing rate: 30.02%
+2026-06-04 05:13:43 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 05:13:43 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 05:13:44 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/timemixerpp/eld/mr0.3/seed123
+2026-06-04 05:13:44 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/timemixerpp/eld/mr0.3/seed123/tensorboard
+2026-06-04 05:13:44 [INFO]: Using customized MAE as the training loss function.
+2026-06-04 05:13:44 [INFO]: Using customized MSE as the validation metric function.
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: timemixerpp
+✅ Dataset 'eld' with missing rate 0.3 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.3
+🚀 Starting TimeMixer++ training pipeline...
+Traceback (most recent call last):
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/main.py", line 98, in <module>
+    main(args)
+    ~~~~^^^^^^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/main.py", line 72, in main
+    mae, mse, rmse, mre = MODEL_PIPELINES[model_name](dataset, args)
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pipeline/imputations/timemixerpp.py", line 38, in train_and_evaluate_timemixerpp
+    model = TimeMixerPP(
+        n_steps=dataset["n_steps"],
+    ...<20 lines>...
+        verbose=True,
+    )
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/imputation/timemixerpp/model.py", line 182, in __init__
+    self.model = _TimeMixerPP(
+                 ~~~~~~~~~~~~^
+        n_steps=self.n_steps,
+        ^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        task_name="imputation",
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/imputation/timemixerpp/core.py", line 49, in __init__
+    self.model = BackboneTimeMixerPP(
+                 ~~~~~~~~~~~~~~~~~~~^
+        task_name=task_name,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<16 lines>...
+        use_future_temporal_feature=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/nn/modules/timemixerpp/backbone.py", line 88, in __init__
+    full_attn_operator = ScaledDotProductAttention(d_kv**0.5, dropout)
+  File "/home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/pypots/nn/modules/transformer/attention.py", line 57, in __init__
+    assert temperature > 0, f"temperature should be positive but got {temperature}"
+           ^^^^^^^^^^^^^^^
+AssertionError: temperature should be positive but got 0.0

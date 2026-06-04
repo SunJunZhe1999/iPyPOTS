@@ -1,0 +1,112 @@
+2026-06-04 06:15:24 [INFO]: Have set the random seed as 456 for numpy and pytorch.
+2026-06-04 06:15:24 [INFO]: You're using dataset solar_alabama, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/solar_alabama
+2026-06-04 06:15:24 [INFO]: Dataset solar_alabama has already been downloaded. Processing directly...
+2026-06-04 06:15:24 [INFO]: Dataset solar_alabama has already been cached. Loading from cache directly...
+2026-06-04 06:15:24 [INFO]: Loaded successfully!
+2026-06-04 06:15:24 [INFO]: months selected as train set are <PeriodArray>
+['2006-01', '2006-02', '2006-03', '2006-04', '2006-05', '2006-06']
+Length: 6, dtype: period[M]
+2026-06-04 06:15:24 [INFO]: months selected as val set are <PeriodArray>
+['2006-07', '2006-08', '2006-09']
+Length: 3, dtype: period[M]
+2026-06-04 06:15:24 [INFO]: months selected as test set are <PeriodArray>
+['2006-10', '2006-11', '2006-12']
+Length: 3, dtype: period[M]
+2026-06-04 06:15:24 [INFO]: Total sample number: 2190
+2026-06-04 06:15:24 [INFO]: Training set size: 1086 (49.59%)
+2026-06-04 06:15:24 [INFO]: Validation set size: 552 (25.21%)
+2026-06-04 06:15:24 [INFO]: Test set size: 552 (25.21%)
+2026-06-04 06:15:24 [INFO]: Number of steps: 24
+2026-06-04 06:15:24 [INFO]: Number of features: 137
+2026-06-04 06:15:24 [INFO]: Train set missing rate: 29.96%
+2026-06-04 06:15:24 [INFO]: Validating set missing rate: 30.02%
+2026-06-04 06:15:24 [INFO]: Test set missing rate: 29.99%
+2026-06-04 06:15:24 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 06:15:24 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 06:15:25 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/tslanet/solar/mr0.3/seed456
+2026-06-04 06:15:25 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/tslanet/solar/mr0.3/seed456/tensorboard
+2026-06-04 06:15:25 [INFO]: Model placed on cuda:0
+2026-06-04 06:15:25 [INFO]: TSLANet initialized with the given hyperparameters.
+ ├─ Total parameters: 130,266
+ ├─ Trainable parameters: 130,266
+ └─ Trainable ratio: 100.00%
+2026-06-04 06:15:26 [INFO]: Epoch 001 - training loss (default): 0.2348, validation loss: 0.1190
+2026-06-04 06:15:27 [INFO]: Epoch 002 - training loss (default): 0.1253, validation loss: 0.0875
+2026-06-04 06:15:27 [INFO]: Epoch 003 - training loss (default): 0.1000, validation loss: 0.0721
+2026-06-04 06:15:27 [INFO]: Epoch 004 - training loss (default): 0.0835, validation loss: 0.0608
+2026-06-04 06:15:28 [INFO]: Epoch 005 - training loss (default): 0.0706, validation loss: 0.0523
+2026-06-04 06:15:28 [INFO]: Epoch 006 - training loss (default): 0.0610, validation loss: 0.0449
+2026-06-04 06:15:29 [INFO]: Epoch 007 - training loss (default): 0.0540, validation loss: 0.0388
+2026-06-04 06:15:29 [INFO]: Epoch 008 - training loss (default): 0.0465, validation loss: 0.0346
+2026-06-04 06:15:30 [INFO]: Epoch 009 - training loss (default): 0.0406, validation loss: 0.0310
+2026-06-04 06:15:30 [INFO]: Epoch 010 - training loss (default): 0.0385, validation loss: 0.0287
+2026-06-04 06:15:31 [INFO]: Epoch 011 - training loss (default): 0.0368, validation loss: 0.0265
+2026-06-04 06:15:31 [INFO]: Epoch 012 - training loss (default): 0.0335, validation loss: 0.0252
+2026-06-04 06:15:31 [INFO]: Epoch 013 - training loss (default): 0.0312, validation loss: 0.0240
+2026-06-04 06:15:32 [INFO]: Epoch 014 - training loss (default): 0.0291, validation loss: 0.0229
+2026-06-04 06:15:32 [INFO]: Epoch 015 - training loss (default): 0.0282, validation loss: 0.0218
+2026-06-04 06:15:33 [INFO]: Epoch 016 - training loss (default): 0.0267, validation loss: 0.0211
+2026-06-04 06:15:33 [INFO]: Epoch 017 - training loss (default): 0.0259, validation loss: 0.0203
+2026-06-04 06:15:34 [INFO]: Epoch 018 - training loss (default): 0.0248, validation loss: 0.0197
+2026-06-04 06:15:34 [INFO]: Epoch 019 - training loss (default): 0.0248, validation loss: 0.0192
+2026-06-04 06:15:35 [INFO]: Epoch 020 - training loss (default): 0.0233, validation loss: 0.0185
+2026-06-04 06:15:35 [INFO]: Epoch 021 - training loss (default): 0.0229, validation loss: 0.0178
+2026-06-04 06:15:35 [INFO]: Epoch 022 - training loss (default): 0.0224, validation loss: 0.0171
+2026-06-04 06:15:36 [INFO]: Epoch 023 - training loss (default): 0.0216, validation loss: 0.0167
+2026-06-04 06:15:36 [INFO]: Epoch 024 - training loss (default): 0.0208, validation loss: 0.0163
+2026-06-04 06:15:37 [INFO]: Epoch 025 - training loss (default): 0.0192, validation loss: 0.0159
+2026-06-04 06:15:37 [INFO]: Epoch 026 - training loss (default): 0.0189, validation loss: 0.0155
+2026-06-04 06:15:38 [INFO]: Epoch 027 - training loss (default): 0.0186, validation loss: 0.0149
+2026-06-04 06:15:38 [INFO]: Epoch 028 - training loss (default): 0.0177, validation loss: 0.0145
+2026-06-04 06:15:38 [INFO]: Epoch 029 - training loss (default): 0.0177, validation loss: 0.0142
+2026-06-04 06:15:39 [INFO]: Epoch 030 - training loss (default): 0.0169, validation loss: 0.0137
+2026-06-04 06:15:39 [INFO]: Epoch 031 - training loss (default): 0.0161, validation loss: 0.0132
+2026-06-04 06:15:40 [INFO]: Epoch 032 - training loss (default): 0.0159, validation loss: 0.0131
+2026-06-04 06:15:40 [INFO]: Epoch 033 - training loss (default): 0.0154, validation loss: 0.0128
+2026-06-04 06:15:41 [INFO]: Epoch 034 - training loss (default): 0.0148, validation loss: 0.0122
+2026-06-04 06:15:41 [INFO]: Epoch 035 - training loss (default): 0.0141, validation loss: 0.0120
+2026-06-04 06:15:41 [INFO]: Epoch 036 - training loss (default): 0.0145, validation loss: 0.0116
+2026-06-04 06:15:42 [INFO]: Epoch 037 - training loss (default): 0.0141, validation loss: 0.0112
+2026-06-04 06:15:42 [INFO]: Epoch 038 - training loss (default): 0.0130, validation loss: 0.0111
+2026-06-04 06:15:43 [INFO]: Epoch 039 - training loss (default): 0.0130, validation loss: 0.0108
+2026-06-04 06:15:43 [INFO]: Epoch 040 - training loss (default): 0.0127, validation loss: 0.0104
+2026-06-04 06:15:44 [INFO]: Epoch 041 - training loss (default): 0.0123, validation loss: 0.0102
+2026-06-04 06:15:44 [INFO]: Epoch 042 - training loss (default): 0.0121, validation loss: 0.0100
+2026-06-04 06:15:45 [INFO]: Epoch 043 - training loss (default): 0.0115, validation loss: 0.0098
+2026-06-04 06:15:45 [INFO]: Epoch 044 - training loss (default): 0.0114, validation loss: 0.0094
+2026-06-04 06:15:45 [INFO]: Epoch 045 - training loss (default): 0.0106, validation loss: 0.0091
+2026-06-04 06:15:46 [INFO]: Epoch 046 - training loss (default): 0.0108, validation loss: 0.0091
+2026-06-04 06:15:46 [INFO]: Epoch 047 - training loss (default): 0.0104, validation loss: 0.0089
+2026-06-04 06:15:47 [INFO]: Epoch 048 - training loss (default): 0.0104, validation loss: 0.0086
+2026-06-04 06:15:47 [INFO]: Epoch 049 - training loss (default): 0.0095, validation loss: 0.0083
+2026-06-04 06:15:48 [INFO]: Epoch 050 - training loss (default): 0.0096, validation loss: 0.0081
+2026-06-04 06:15:48 [INFO]: Epoch 051 - training loss (default): 0.0096, validation loss: 0.0079
+2026-06-04 06:15:49 [INFO]: Epoch 052 - training loss (default): 0.0093, validation loss: 0.0078
+2026-06-04 06:15:49 [INFO]: Epoch 053 - training loss (default): 0.0091, validation loss: 0.0075
+2026-06-04 06:15:49 [INFO]: Epoch 054 - training loss (default): 0.0088, validation loss: 0.0073
+2026-06-04 06:15:50 [INFO]: Epoch 055 - training loss (default): 0.0083, validation loss: 0.0070
+2026-06-04 06:15:50 [INFO]: Epoch 056 - training loss (default): 0.0083, validation loss: 0.0069
+2026-06-04 06:15:51 [INFO]: Epoch 057 - training loss (default): 0.0080, validation loss: 0.0067
+2026-06-04 06:15:51 [INFO]: Epoch 058 - training loss (default): 0.0082, validation loss: 0.0065
+2026-06-04 06:15:52 [INFO]: Epoch 059 - training loss (default): 0.0075, validation loss: 0.0064
+2026-06-04 06:15:52 [INFO]: Epoch 060 - training loss (default): 0.0072, validation loss: 0.0064
+2026-06-04 06:15:52 [INFO]: Finished training. The best model is from epoch#60.
+2026-06-04 06:15:52 [INFO]: Saved the model to output/imputation/cuda/paper_campaign/tslanet/solar/mr0.3/seed456/TSLANet.pypots
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: tslanet
+✅ Dataset 'solar' with missing rate 0.3 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.3
+🚀 Starting TSLANet training pipeline...
+[TSLANet] Testing —— MAE: 0.7877| MSE: 0.8213| RMSE: 0.9062| MRE: 1.0162| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/tslanet/solar/mr0.3/seed456/metrics/tslanet_metrics.json

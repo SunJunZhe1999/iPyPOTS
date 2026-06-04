@@ -1,0 +1,114 @@
+2026-06-04 06:08:42 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 06:08:42 [INFO]: You're using dataset solar_alabama, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/solar_alabama
+2026-06-04 06:08:42 [INFO]: Dataset solar_alabama has already been downloaded. Processing directly...
+2026-06-04 06:08:42 [INFO]: Dataset solar_alabama has already been cached. Loading from cache directly...
+2026-06-04 06:08:42 [INFO]: Loaded successfully!
+2026-06-04 06:08:42 [INFO]: months selected as train set are <PeriodArray>
+['2006-01', '2006-02', '2006-03', '2006-04', '2006-05', '2006-06']
+Length: 6, dtype: period[M]
+2026-06-04 06:08:42 [INFO]: months selected as val set are <PeriodArray>
+['2006-07', '2006-08', '2006-09']
+Length: 3, dtype: period[M]
+2026-06-04 06:08:42 [INFO]: months selected as test set are <PeriodArray>
+['2006-10', '2006-11', '2006-12']
+Length: 3, dtype: period[M]
+2026-06-04 06:08:43 [INFO]: Total sample number: 2190
+2026-06-04 06:08:43 [INFO]: Training set size: 1086 (49.59%)
+2026-06-04 06:08:43 [INFO]: Validation set size: 552 (25.21%)
+2026-06-04 06:08:43 [INFO]: Test set size: 552 (25.21%)
+2026-06-04 06:08:43 [INFO]: Number of steps: 24
+2026-06-04 06:08:43 [INFO]: Number of features: 137
+2026-06-04 06:08:43 [INFO]: Train set missing rate: 29.98%
+2026-06-04 06:08:43 [INFO]: Validating set missing rate: 30.01%
+2026-06-04 06:08:43 [INFO]: Test set missing rate: 29.99%
+2026-06-04 06:08:43 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: ['cuda:0']
+2026-06-04 06:08:43 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using the given device: cuda:0
+2026-06-04 06:08:43 [INFO]: Model files will be saved to output/imputation/cuda/paper_campaign/tefn/solar/mr0.3/seed123
+2026-06-04 06:08:43 [INFO]: Tensorboard file will be saved to output/imputation/cuda/paper_campaign/tefn/solar/mr0.3/seed123/tensorboard
+2026-06-04 06:08:43 [INFO]: Using customized MAE as the training loss function.
+2026-06-04 06:08:43 [INFO]: Using customized MSE as the validation metric function.
+2026-06-04 06:08:43 [INFO]: Model placed on cuda:0
+2026-06-04 06:08:43 [INFO]: TEFN initialized with the given hyperparameters.
+ ├─ Total parameters: 42,827
+ ├─ Trainable parameters: 42,827
+ └─ Trainable ratio: 100.00%
+2026-06-04 06:08:44 [INFO]: Epoch 001 - training loss (MAE): 9.1959, validation MSE: 28.5033
+2026-06-04 06:08:44 [INFO]: Epoch 002 - training loss (MAE): 8.4604, validation MSE: 27.1046
+2026-06-04 06:08:44 [INFO]: Epoch 003 - training loss (MAE): 8.1722, validation MSE: 26.6399
+2026-06-04 06:08:45 [INFO]: Epoch 004 - training loss (MAE): 7.9771, validation MSE: 25.6742
+2026-06-04 06:08:45 [INFO]: Epoch 005 - training loss (MAE): 7.7878, validation MSE: 24.2027
+2026-06-04 06:08:45 [INFO]: Epoch 006 - training loss (MAE): 7.5545, validation MSE: 22.8840
+2026-06-04 06:08:45 [INFO]: Epoch 007 - training loss (MAE): 7.3778, validation MSE: 21.7972
+2026-06-04 06:08:45 [INFO]: Epoch 008 - training loss (MAE): 7.1727, validation MSE: 20.8944
+2026-06-04 06:08:45 [INFO]: Epoch 009 - training loss (MAE): 6.9865, validation MSE: 20.1039
+2026-06-04 06:08:46 [INFO]: Epoch 010 - training loss (MAE): 6.7959, validation MSE: 19.3823
+2026-06-04 06:08:46 [INFO]: Epoch 011 - training loss (MAE): 6.5991, validation MSE: 18.6341
+2026-06-04 06:08:46 [INFO]: Epoch 012 - training loss (MAE): 6.4259, validation MSE: 17.8492
+2026-06-04 06:08:46 [INFO]: Epoch 013 - training loss (MAE): 6.2277, validation MSE: 17.0577
+2026-06-04 06:08:46 [INFO]: Epoch 014 - training loss (MAE): 6.0441, validation MSE: 16.3121
+2026-06-04 06:08:47 [INFO]: Epoch 015 - training loss (MAE): 5.8605, validation MSE: 15.6558
+2026-06-04 06:08:47 [INFO]: Epoch 016 - training loss (MAE): 5.6798, validation MSE: 14.9530
+2026-06-04 06:08:47 [INFO]: Epoch 017 - training loss (MAE): 5.4934, validation MSE: 14.2579
+2026-06-04 06:08:47 [INFO]: Epoch 018 - training loss (MAE): 5.3184, validation MSE: 13.6196
+2026-06-04 06:08:47 [INFO]: Epoch 019 - training loss (MAE): 5.1406, validation MSE: 12.9706
+2026-06-04 06:08:48 [INFO]: Epoch 020 - training loss (MAE): 4.9553, validation MSE: 12.3515
+2026-06-04 06:08:48 [INFO]: Epoch 021 - training loss (MAE): 4.8002, validation MSE: 11.7058
+2026-06-04 06:08:48 [INFO]: Epoch 022 - training loss (MAE): 4.6304, validation MSE: 11.1145
+2026-06-04 06:08:48 [INFO]: Epoch 023 - training loss (MAE): 4.4751, validation MSE: 10.5555
+2026-06-04 06:08:49 [INFO]: Epoch 024 - training loss (MAE): 4.3221, validation MSE: 10.0650
+2026-06-04 06:08:49 [INFO]: Epoch 025 - training loss (MAE): 4.1649, validation MSE: 9.5378
+2026-06-04 06:08:49 [INFO]: Epoch 026 - training loss (MAE): 4.0085, validation MSE: 9.0481
+2026-06-04 06:08:49 [INFO]: Epoch 027 - training loss (MAE): 3.8792, validation MSE: 8.5769
+2026-06-04 06:08:49 [INFO]: Epoch 028 - training loss (MAE): 3.7278, validation MSE: 8.1549
+2026-06-04 06:08:50 [INFO]: Epoch 029 - training loss (MAE): 3.5870, validation MSE: 7.7337
+2026-06-04 06:08:50 [INFO]: Epoch 030 - training loss (MAE): 3.4657, validation MSE: 7.3432
+2026-06-04 06:08:50 [INFO]: Epoch 031 - training loss (MAE): 3.3365, validation MSE: 6.9839
+2026-06-04 06:08:50 [INFO]: Epoch 032 - training loss (MAE): 3.2299, validation MSE: 6.6088
+2026-06-04 06:08:50 [INFO]: Epoch 033 - training loss (MAE): 3.1123, validation MSE: 6.2987
+2026-06-04 06:08:51 [INFO]: Epoch 034 - training loss (MAE): 2.9851, validation MSE: 5.9660
+2026-06-04 06:08:51 [INFO]: Epoch 035 - training loss (MAE): 2.8745, validation MSE: 5.7034
+2026-06-04 06:08:51 [INFO]: Epoch 036 - training loss (MAE): 2.7672, validation MSE: 5.3953
+2026-06-04 06:08:51 [INFO]: Epoch 037 - training loss (MAE): 2.6646, validation MSE: 5.1455
+2026-06-04 06:08:51 [INFO]: Epoch 038 - training loss (MAE): 2.5540, validation MSE: 4.9328
+2026-06-04 06:08:52 [INFO]: Epoch 039 - training loss (MAE): 2.4447, validation MSE: 4.6439
+2026-06-04 06:08:52 [INFO]: Epoch 040 - training loss (MAE): 2.3553, validation MSE: 4.4635
+2026-06-04 06:08:52 [INFO]: Epoch 041 - training loss (MAE): 2.2549, validation MSE: 4.2516
+2026-06-04 06:08:52 [INFO]: Epoch 042 - training loss (MAE): 2.1537, validation MSE: 4.0316
+2026-06-04 06:08:52 [INFO]: Epoch 043 - training loss (MAE): 2.0653, validation MSE: 3.8376
+2026-06-04 06:08:53 [INFO]: Epoch 044 - training loss (MAE): 1.9851, validation MSE: 3.6889
+2026-06-04 06:08:53 [INFO]: Epoch 045 - training loss (MAE): 1.9087, validation MSE: 3.5091
+2026-06-04 06:08:53 [INFO]: Epoch 046 - training loss (MAE): 1.8286, validation MSE: 3.3694
+2026-06-04 06:08:53 [INFO]: Epoch 047 - training loss (MAE): 1.7864, validation MSE: 3.2031
+2026-06-04 06:08:53 [INFO]: Epoch 048 - training loss (MAE): 1.7039, validation MSE: 3.0173
+2026-06-04 06:08:54 [INFO]: Epoch 049 - training loss (MAE): 1.6598, validation MSE: 2.8767
+2026-06-04 06:08:54 [INFO]: Epoch 050 - training loss (MAE): 1.5959, validation MSE: 2.7263
+2026-06-04 06:08:54 [INFO]: Epoch 051 - training loss (MAE): 1.5377, validation MSE: 2.5970
+2026-06-04 06:08:54 [INFO]: Epoch 052 - training loss (MAE): 1.4902, validation MSE: 2.5222
+2026-06-04 06:08:54 [INFO]: Epoch 053 - training loss (MAE): 1.4460, validation MSE: 2.3831
+2026-06-04 06:08:54 [INFO]: Epoch 054 - training loss (MAE): 1.4042, validation MSE: 2.2599
+2026-06-04 06:08:55 [INFO]: Epoch 055 - training loss (MAE): 1.3368, validation MSE: 2.1559
+2026-06-04 06:08:55 [INFO]: Epoch 056 - training loss (MAE): 1.3030, validation MSE: 2.0581
+2026-06-04 06:08:55 [INFO]: Epoch 057 - training loss (MAE): 1.2722, validation MSE: 1.9763
+2026-06-04 06:08:55 [INFO]: Epoch 058 - training loss (MAE): 1.2325, validation MSE: 1.8994
+2026-06-04 06:08:55 [INFO]: Epoch 059 - training loss (MAE): 1.1913, validation MSE: 1.8641
+2026-06-04 06:08:56 [INFO]: Epoch 060 - training loss (MAE): 1.1634, validation MSE: 1.7494
+2026-06-04 06:08:56 [INFO]: Finished training. The best model is from epoch#60.
+2026-06-04 06:08:56 [INFO]: Saved the model to output/imputation/cuda/paper_campaign/tefn/solar/mr0.3/seed123/TEFN.pypots
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: tefn
+✅ Dataset 'solar' with missing rate 0.3 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.3
+🚀 Starting TEFN training pipeline...
+[TEFN] Testing —— MAE: 0.8193| MSE: 1.6594| RMSE: 1.2882| MRE: 1.0582| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/tefn/solar/mr0.3/seed123/metrics/tefn_metrics.json

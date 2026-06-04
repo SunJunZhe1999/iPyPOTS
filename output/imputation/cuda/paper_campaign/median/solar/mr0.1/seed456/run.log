@@ -1,0 +1,43 @@
+2026-06-04 06:00:07 [INFO]: Have set the random seed as 456 for numpy and pytorch.
+2026-06-04 06:00:07 [INFO]: You're using dataset solar_alabama, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/solar_alabama
+2026-06-04 06:00:07 [INFO]: Dataset solar_alabama has already been downloaded. Processing directly...
+2026-06-04 06:00:07 [INFO]: Dataset solar_alabama has already been cached. Loading from cache directly...
+2026-06-04 06:00:07 [INFO]: Loaded successfully!
+2026-06-04 06:00:07 [INFO]: months selected as train set are <PeriodArray>
+['2006-01', '2006-02', '2006-03', '2006-04', '2006-05', '2006-06']
+Length: 6, dtype: period[M]
+2026-06-04 06:00:07 [INFO]: months selected as val set are <PeriodArray>
+['2006-07', '2006-08', '2006-09']
+Length: 3, dtype: period[M]
+2026-06-04 06:00:07 [INFO]: months selected as test set are <PeriodArray>
+['2006-10', '2006-11', '2006-12']
+Length: 3, dtype: period[M]
+2026-06-04 06:00:07 [INFO]: Total sample number: 2190
+2026-06-04 06:00:07 [INFO]: Training set size: 1086 (49.59%)
+2026-06-04 06:00:07 [INFO]: Validation set size: 552 (25.21%)
+2026-06-04 06:00:07 [INFO]: Test set size: 552 (25.21%)
+2026-06-04 06:00:07 [INFO]: Number of steps: 24
+2026-06-04 06:00:07 [INFO]: Number of features: 137
+2026-06-04 06:00:07 [INFO]: Train set missing rate: 9.97%
+2026-06-04 06:00:07 [INFO]: Validating set missing rate: 10.02%
+2026-06-04 06:00:07 [INFO]: Test set missing rate: 10.01%
+2026-06-04 06:00:07 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 06:00:08 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: median
+✅ Dataset 'solar' with missing rate 0.1 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.1
+🚀 Starting Median imputation baseline...
+[Median] Testing —— MAE: 0.5281| MSE: 1.0233| RMSE: 1.0116| MRE: 0.6817| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/median/solar/mr0.1/seed456/metrics/median_metrics.json

@@ -34,3 +34,8 @@ output/
 datasets/
 .venv/
 .lightcc_codex_key*
+
+# generated analysis scripts and figures (not part of the library)
+analysis/
+# trained model checkpoints (too large for git)
+*.pypots

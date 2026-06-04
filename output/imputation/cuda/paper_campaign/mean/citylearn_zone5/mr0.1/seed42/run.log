@@ -1,0 +1,33 @@
+2026-06-04 08:44:40 [INFO]: Have set the random seed as 42 for numpy and pytorch.
+2026-06-04 08:44:48 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 08:44:49 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: mean
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_1.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_1.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_2.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_2.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_3.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_3.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_4.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_4.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_5.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_5.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_6.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_6.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_7.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_7.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_8.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_8.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/Building_9.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/Building_9.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/weather_data.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/weather_data.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/carbon_intensity.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/carbon_intensity.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/solar_generation_1kW.csv -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/solar_generation_1kW.csv
+Downloading https://raw.githubusercontent.com/citylearn-project/CityLearn/v1.0.0/data/Climate_Zone_5/building_attributes.json -> /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/citylearn_zone5/building_attributes.json
+✅ Dataset 'citylearn_zone5' with missing rate 0.1 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.1
+🚀 Starting Mean imputation baseline...
+[Mean] Testing —— MAE: 0.7857| MSE: 0.8887| RMSE: 0.9427| MRE: 0.9661| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/mean/citylearn_zone5/mr0.1/seed42/metrics/mean_metrics.json

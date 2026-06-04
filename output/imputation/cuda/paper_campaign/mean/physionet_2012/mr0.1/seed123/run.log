@@ -1,0 +1,39 @@
+2026-06-04 06:22:51 [INFO]: Have set the random seed as 123 for numpy and pytorch.
+2026-06-04 06:22:51 [INFO]: You're using dataset physionet_2012, please cite it properly in your work. You can find its reference information at the below link: 
+https://github.com/WenjieDu/TSDB/tree/main/dataset_profiles/physionet_2012
+2026-06-04 06:22:51 [INFO]: Dataset physionet_2012 has already been downloaded. Processing directly...
+2026-06-04 06:22:51 [INFO]: Dataset physionet_2012 has already been cached. Loading from cache directly...
+2026-06-04 06:22:52 [INFO]: Loaded successfully!
+/home/Aboya_25R9803/anaconda3/lib/python3.13/site-packages/benchpots/datasets/physionet_2012.py:109: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  X = X.groupby("RecordID").apply(apply_func)
+2026-06-04 06:22:58 [WARNING]: Note that physionet_2012 has sparse observations in the time series, hence we don't add additional missing values to the training dataset. 
+2026-06-04 06:22:58 [INFO]: 23048 values masked out in the val set as ground truth, take 9.99% of the original observed values
+2026-06-04 06:22:58 [INFO]: 28776 values masked out in the test set as ground truth, take 9.95% of the original observed values
+2026-06-04 06:22:58 [INFO]: Total sample number: 3997
+2026-06-04 06:22:58 [INFO]: Training set size: 2557 (63.97%)
+2026-06-04 06:22:58 [INFO]: Validation set size: 640 (16.01%)
+2026-06-04 06:22:58 [INFO]: Test set size: 800 (20.02%)
+2026-06-04 06:22:58 [INFO]: Number of steps: 48
+2026-06-04 06:22:58 [INFO]: Number of features: 37
+2026-06-04 06:22:58 [INFO]: Train set missing rate: 79.75%
+2026-06-04 06:22:58 [INFO]: Validating set missing rate: 81.72%
+2026-06-04 06:22:58 [INFO]: Test set missing rate: 81.67%
+2026-06-04 06:22:58 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥Using device list: None
+2026-06-04 06:22:58 [INFO]: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥No given device, using default device: cuda
+[34m
+████████╗██╗███╗   ███╗███████╗    ███████╗███████╗██████╗ ██╗███████╗███████╗    █████╗ ██╗
+╚══██╔══╝██║████╗ ████║██╔════╝    ██╔════╝██╔════╝██╔══██╗██║██╔════╝██╔════╝   ██╔══██╗██║
+   ██║   ██║██╔████╔██║█████╗█████╗███████╗█████╗  ██████╔╝██║█████╗  ███████╗   ███████║██║
+   ██║   ██║██║╚██╔╝██║██╔══╝╚════╝╚════██║██╔══╝  ██╔══██╗██║██╔══╝  ╚════██║   ██╔══██║██║
+   ██║   ██║██║ ╚═╝ ██║███████╗    ███████║███████╗██║  ██║██║███████╗███████║██╗██║  ██║██║
+   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝
+ai4ts v0.0.3 - building AI for unified time-series analysis, https://time-series.ai [0m
+
+Use Train GPT: False
+Use Lora: False
+Use Profiling: False
+🚀 Running imputation pipeline for model: mean
+✅ Dataset 'physionet_2012' with missing rate 0.1 loaded at: /home/Aboya_25R9803/projects/lab/SUN/iPyPOTS/datasets/rate_0.1
+🚀 Starting Mean imputation baseline...
+[Mean] Testing —— MAE: 0.6892| MSE: 0.8787| RMSE: 0.9374| MRE: 0.9995| 
+📊 Metrics saved to: output/imputation/cuda/paper_campaign/mean/physionet_2012/mr0.1/seed123/metrics/mean_metrics.json

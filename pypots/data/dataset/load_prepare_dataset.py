@@ -25,13 +25,12 @@ from .energy_preparation import CUSTOM_ENERGY_DATASET_NAMES, prepare_custom_ener
 class DatasetPreparator:
     def __init__(self, cache_dir: str = "./datasets/"):
         self.base_cache_dir = os.path.abspath(cache_dir)
-        if not os.path.exists(os.path.join(self.base_cache_dir, "physionet_2012")):
-            try:
-                tsdb.migrate_cache(self.base_cache_dir)
-            except Exception as e:
-                print(f"⚠️ TSDB migration skipped due to error: {e}")
-        else:
-            print(f"ℹ️ TSDB migration not needed, directory exists: {self.base_cache_dir}")
+        # tsdb.migrate_cache() was intentionally removed here: it repointed tsdb_home
+        # to this repo's datasets/ dir, which collided with stale numpy-2.x-pickled
+        # caches and made benchpots loaders return None on every run after the first.
+        # tsdb keeps its default home (~/.pypots/tsdb); processed per-rate windows are
+        # written under datasets/rate_*. Only the local rate cache dir is needed here.
+        os.makedirs(self.base_cache_dir, exist_ok=True)
 
     def prepare(self, args) -> Dict:
         """
