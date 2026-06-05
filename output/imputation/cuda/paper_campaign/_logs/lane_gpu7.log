@@ -1,0 +1,170 @@
+Lane GPU7 start 2026-06-04T04:39:20+09:00 datasets=[eld physionet_2012]
+DONE 04:40:28 mean/eld/mr0.1/seed42
+DONE 04:40:39 mean/eld/mr0.1/seed123
+Lane GPU7 start 2026-06-04T04:40:40+09:00 datasets=[eld physionet_2012]
+skip mean/eld/mr0.1/seed42
+skip mean/eld/mr0.1/seed123
+DONE 04:40:50 mean/eld/mr0.1/seed456
+DONE 04:40:51 mean/eld/mr0.1/seed456
+DONE 04:41:01 mean/eld/mr0.3/seed42
+DONE 04:41:03 mean/eld/mr0.3/seed42
+DONE 04:41:12 mean/eld/mr0.3/seed123
+DONE 04:41:14 mean/eld/mr0.3/seed123
+DONE 04:41:23 mean/eld/mr0.3/seed456
+DONE 04:41:25 mean/eld/mr0.3/seed456
+DONE 04:41:34 mean/eld/mr0.5/seed42
+DONE 04:41:37 mean/eld/mr0.5/seed42
+DONE 04:41:45 mean/eld/mr0.5/seed123
+DONE 04:41:48 mean/eld/mr0.5/seed123
+DONE 04:41:56 mean/eld/mr0.5/seed456
+DONE 04:42:00 mean/eld/mr0.5/seed456
+DONE 04:42:07 median/eld/mr0.1/seed42
+DONE 04:42:11 median/eld/mr0.1/seed42
+DONE 04:42:18 median/eld/mr0.1/seed123
+DONE 04:42:22 median/eld/mr0.1/seed123
+Lane GPU7 start 2026-06-04T04:43:16+09:00 datasets=[eld physionet_2012]
+skip mean/eld/mr0.1/seed42
+skip mean/eld/mr0.1/seed123
+skip mean/eld/mr0.1/seed456
+skip mean/eld/mr0.3/seed42
+skip mean/eld/mr0.3/seed123
+skip mean/eld/mr0.3/seed456
+skip mean/eld/mr0.5/seed42
+skip mean/eld/mr0.5/seed123
+skip mean/eld/mr0.5/seed456
+skip median/eld/mr0.1/seed42
+skip median/eld/mr0.1/seed123
+DONE 04:43:29 median/eld/mr0.1/seed456
+DONE 04:43:41 median/eld/mr0.3/seed42
+DONE 04:43:54 median/eld/mr0.3/seed123
+DONE 04:44:04 median/eld/mr0.3/seed456
+DONE 04:44:16 median/eld/mr0.5/seed42
+DONE 04:44:30 median/eld/mr0.5/seed123
+DONE 04:44:42 median/eld/mr0.5/seed456
+DONE 04:44:53 locf/eld/mr0.1/seed42
+DONE 04:45:06 locf/eld/mr0.1/seed123
+DONE 04:45:17 locf/eld/mr0.1/seed456
+DONE 04:45:31 locf/eld/mr0.3/seed42
+DONE 04:45:42 locf/eld/mr0.3/seed123
+DONE 04:45:53 locf/eld/mr0.3/seed456
+DONE 04:46:04 locf/eld/mr0.5/seed42
+DONE 04:46:14 locf/eld/mr0.5/seed123
+DONE 04:46:28 locf/eld/mr0.5/seed456
+DONE 04:47:43 saits/eld/mr0.1/seed42
+DONE 04:48:55 saits/eld/mr0.1/seed123
+DONE 04:50:10 saits/eld/mr0.1/seed456
+DONE 04:51:33 saits/eld/mr0.3/seed42
+DONE 04:52:45 saits/eld/mr0.3/seed123
+DONE 04:54:00 saits/eld/mr0.3/seed456
+DONE 04:55:44 saits/eld/mr0.5/seed42
+DONE 04:57:06 saits/eld/mr0.5/seed123
+DONE 04:58:43 saits/eld/mr0.5/seed456
+DONE 05:00:14 tefn/eld/mr0.1/seed42
+DONE 05:01:50 tefn/eld/mr0.1/seed123
+DONE 05:03:22 tefn/eld/mr0.1/seed456
+DONE 05:04:53 tefn/eld/mr0.3/seed42
+DONE 05:06:23 tefn/eld/mr0.3/seed123
+DONE 05:08:05 tefn/eld/mr0.3/seed456
+DONE 05:09:56 tefn/eld/mr0.5/seed42
+DONE 05:11:25 tefn/eld/mr0.5/seed123
+DONE 05:12:49 tefn/eld/mr0.5/seed456
+FAIL(1) 05:13:00 timemixerpp/eld/mr0.1/seed42
+FAIL(1) 05:13:10 timemixerpp/eld/mr0.1/seed123
+FAIL(1) 05:13:20 timemixerpp/eld/mr0.1/seed456
+FAIL(1) 05:13:35 timemixerpp/eld/mr0.3/seed42
+FAIL(1) 05:13:45 timemixerpp/eld/mr0.3/seed123
+FAIL(1) 05:13:56 timemixerpp/eld/mr0.3/seed456
+FAIL(1) 05:14:08 timemixerpp/eld/mr0.5/seed42
+FAIL(1) 05:14:18 timemixerpp/eld/mr0.5/seed123
+FAIL(1) 05:14:29 timemixerpp/eld/mr0.5/seed456
+DONE 05:20:34 tslanet/eld/mr0.1/seed42
+DONE 05:25:53 tslanet/eld/mr0.1/seed123
+DONE 05:31:38 tslanet/eld/mr0.1/seed456
+DONE 05:37:29 tslanet/eld/mr0.3/seed42
+DONE 05:43:17 tslanet/eld/mr0.3/seed123
+DONE 05:49:06 tslanet/eld/mr0.3/seed456
+DONE 05:54:52 tslanet/eld/mr0.5/seed42
+DONE 05:59:52 tslanet/eld/mr0.5/seed123
+DONE 06:05:42 tslanet/eld/mr0.5/seed456
+DONE 06:08:03 gpt4ts/eld/mr0.1/seed42
+DONE 06:09:05 gpt4ts/eld/mr0.1/seed123
+DONE 06:11:28 gpt4ts/eld/mr0.1/seed456
+DONE 06:11:56 gpt4ts/eld/mr0.3/seed42
+DONE 06:12:58 gpt4ts/eld/mr0.3/seed123
+DONE 06:15:15 gpt4ts/eld/mr0.3/seed456
+FAIL(1) 06:15:33 gpt4ts/eld/mr0.5/seed42
+FAIL(1) 06:15:49 gpt4ts/eld/mr0.5/seed123
+FAIL(1) 06:16:04 gpt4ts/eld/mr0.5/seed456
+DONE 06:22:44 mean/physionet_2012/mr0.1/seed42
+DONE 06:23:00 mean/physionet_2012/mr0.1/seed123
+DONE 06:23:18 mean/physionet_2012/mr0.1/seed456
+DONE 06:23:31 mean/physionet_2012/mr0.3/seed42
+DONE 06:23:45 mean/physionet_2012/mr0.3/seed123
+DONE 06:23:59 mean/physionet_2012/mr0.3/seed456
+DONE 06:24:15 mean/physionet_2012/mr0.5/seed42
+DONE 06:24:31 mean/physionet_2012/mr0.5/seed123
+DONE 06:24:45 mean/physionet_2012/mr0.5/seed456
+DONE 06:24:59 median/physionet_2012/mr0.1/seed42
+DONE 06:25:15 median/physionet_2012/mr0.1/seed123
+DONE 06:25:31 median/physionet_2012/mr0.1/seed456
+DONE 06:25:46 median/physionet_2012/mr0.3/seed42
+DONE 06:26:03 median/physionet_2012/mr0.3/seed123
+DONE 06:26:18 median/physionet_2012/mr0.3/seed456
+DONE 06:26:39 median/physionet_2012/mr0.5/seed42
+DONE 06:26:53 median/physionet_2012/mr0.5/seed123
+DONE 06:27:07 median/physionet_2012/mr0.5/seed456
+DONE 06:27:22 locf/physionet_2012/mr0.1/seed42
+DONE 06:27:38 locf/physionet_2012/mr0.1/seed123
+DONE 06:27:52 locf/physionet_2012/mr0.1/seed456
+DONE 06:28:06 locf/physionet_2012/mr0.3/seed42
+DONE 06:28:21 locf/physionet_2012/mr0.3/seed123
+DONE 06:28:35 locf/physionet_2012/mr0.3/seed456
+DONE 06:28:50 locf/physionet_2012/mr0.5/seed42
+DONE 06:29:04 locf/physionet_2012/mr0.5/seed123
+DONE 06:29:18 locf/physionet_2012/mr0.5/seed456
+DONE 06:30:23 saits/physionet_2012/mr0.1/seed42
+DONE 06:31:33 saits/physionet_2012/mr0.1/seed123
+DONE 06:32:44 saits/physionet_2012/mr0.1/seed456
+DONE 06:33:51 saits/physionet_2012/mr0.3/seed42
+DONE 06:34:53 saits/physionet_2012/mr0.3/seed123
+DONE 06:36:04 saits/physionet_2012/mr0.3/seed456
+DONE 06:37:11 saits/physionet_2012/mr0.5/seed42
+DONE 06:38:11 saits/physionet_2012/mr0.5/seed123
+DONE 06:39:15 saits/physionet_2012/mr0.5/seed456
+DONE 06:40:07 tefn/physionet_2012/mr0.1/seed42
+DONE 06:40:54 tefn/physionet_2012/mr0.1/seed123
+DONE 06:41:41 tefn/physionet_2012/mr0.1/seed456
+DONE 06:42:35 tefn/physionet_2012/mr0.3/seed42
+DONE 06:43:25 tefn/physionet_2012/mr0.3/seed123
+DONE 06:44:12 tefn/physionet_2012/mr0.3/seed456
+DONE 06:45:01 tefn/physionet_2012/mr0.5/seed42
+DONE 06:45:44 tefn/physionet_2012/mr0.5/seed123
+DONE 06:46:34 tefn/physionet_2012/mr0.5/seed456
+FAIL(1) 06:47:05 timemixerpp/physionet_2012/mr0.1/seed42
+FAIL(1) 06:47:29 timemixerpp/physionet_2012/mr0.1/seed123
+FAIL(1) 06:47:51 timemixerpp/physionet_2012/mr0.1/seed456
+FAIL(1) 06:48:14 timemixerpp/physionet_2012/mr0.3/seed42
+FAIL(1) 06:48:32 timemixerpp/physionet_2012/mr0.3/seed123
+FAIL(1) 06:48:52 timemixerpp/physionet_2012/mr0.3/seed456
+FAIL(1) 06:49:11 timemixerpp/physionet_2012/mr0.5/seed42
+FAIL(1) 06:49:31 timemixerpp/physionet_2012/mr0.5/seed123
+FAIL(1) 06:49:51 timemixerpp/physionet_2012/mr0.5/seed456
+DONE 06:50:58 tslanet/physionet_2012/mr0.1/seed42
+DONE 06:52:06 tslanet/physionet_2012/mr0.1/seed123
+DONE 06:53:25 tslanet/physionet_2012/mr0.1/seed456
+DONE 06:54:42 tslanet/physionet_2012/mr0.3/seed42
+DONE 06:55:52 tslanet/physionet_2012/mr0.3/seed123
+DONE 06:56:40 tslanet/physionet_2012/mr0.3/seed456
+DONE 06:57:44 tslanet/physionet_2012/mr0.5/seed42
+DONE 06:59:05 tslanet/physionet_2012/mr0.5/seed123
+DONE 07:00:32 tslanet/physionet_2012/mr0.5/seed456
+FAIL(1) 07:00:54 gpt4ts/physionet_2012/mr0.1/seed42
+FAIL(1) 07:01:12 gpt4ts/physionet_2012/mr0.1/seed123
+FAIL(1) 07:01:31 gpt4ts/physionet_2012/mr0.1/seed456
+FAIL(1) 07:01:55 gpt4ts/physionet_2012/mr0.3/seed42
+FAIL(1) 07:02:16 gpt4ts/physionet_2012/mr0.3/seed123
+FAIL(1) 07:02:35 gpt4ts/physionet_2012/mr0.3/seed456
+FAIL(1) 07:02:54 gpt4ts/physionet_2012/mr0.5/seed42
+FAIL(1) 07:03:15 gpt4ts/physionet_2012/mr0.5/seed123
+FAIL(1) 07:03:32 gpt4ts/physionet_2012/mr0.5/seed456
+Lane GPU7 end 2026-06-04T07:03:32+09:00

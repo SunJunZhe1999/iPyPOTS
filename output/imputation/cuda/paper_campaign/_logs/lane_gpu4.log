@@ -1,0 +1,165 @@
+Lane GPU4 start 2026-06-04T04:39:20+09:00 datasets=[household_power appliances_energy]
+DONE 04:39:58 mean/household_power/mr0.1/seed42
+DONE 04:40:15 mean/household_power/mr0.1/seed123
+DONE 04:40:31 mean/household_power/mr0.1/seed456
+Lane GPU4 start 2026-06-04T04:40:40+09:00 datasets=[household_power appliances_energy]
+skip mean/household_power/mr0.1/seed42
+skip mean/household_power/mr0.1/seed123
+skip mean/household_power/mr0.1/seed456
+DONE 04:40:48 mean/household_power/mr0.3/seed42
+DONE 04:40:56 mean/household_power/mr0.3/seed42
+DONE 04:41:04 mean/household_power/mr0.3/seed123
+DONE 04:41:16 mean/household_power/mr0.3/seed123
+DONE 04:41:20 mean/household_power/mr0.3/seed456
+DONE 04:41:32 mean/household_power/mr0.3/seed456
+DONE 04:41:36 mean/household_power/mr0.5/seed42
+DONE 04:41:48 mean/household_power/mr0.5/seed42
+DONE 04:41:57 mean/household_power/mr0.5/seed123
+DONE 04:42:05 mean/household_power/mr0.5/seed123
+DONE 04:42:14 mean/household_power/mr0.5/seed456
+Lane GPU4 start 2026-06-04T04:43:16+09:00 datasets=[household_power appliances_energy]
+skip mean/household_power/mr0.1/seed42
+skip mean/household_power/mr0.1/seed123
+skip mean/household_power/mr0.1/seed456
+skip mean/household_power/mr0.3/seed42
+skip mean/household_power/mr0.3/seed123
+skip mean/household_power/mr0.3/seed456
+skip mean/household_power/mr0.5/seed42
+skip mean/household_power/mr0.5/seed123
+skip mean/household_power/mr0.5/seed456
+DONE 04:43:34 median/household_power/mr0.1/seed42
+DONE 04:43:50 median/household_power/mr0.1/seed123
+DONE 04:44:06 median/household_power/mr0.1/seed456
+DONE 04:44:23 median/household_power/mr0.3/seed42
+DONE 04:44:39 median/household_power/mr0.3/seed123
+DONE 04:44:56 median/household_power/mr0.3/seed456
+DONE 04:45:13 median/household_power/mr0.5/seed42
+DONE 04:45:29 median/household_power/mr0.5/seed123
+DONE 04:45:44 median/household_power/mr0.5/seed456
+DONE 04:46:02 locf/household_power/mr0.1/seed42
+DONE 04:46:17 locf/household_power/mr0.1/seed123
+DONE 04:46:41 locf/household_power/mr0.1/seed456
+DONE 04:46:58 locf/household_power/mr0.3/seed42
+DONE 04:47:15 locf/household_power/mr0.3/seed123
+DONE 04:47:32 locf/household_power/mr0.3/seed456
+DONE 04:47:50 locf/household_power/mr0.5/seed42
+DONE 04:48:08 locf/household_power/mr0.5/seed123
+DONE 04:48:24 locf/household_power/mr0.5/seed456
+DONE 04:50:39 saits/household_power/mr0.1/seed42
+DONE 04:52:44 saits/household_power/mr0.1/seed123
+DONE 04:55:03 saits/household_power/mr0.1/seed456
+DONE 04:57:05 saits/household_power/mr0.3/seed42
+DONE 05:00:24 saits/household_power/mr0.3/seed123
+DONE 05:03:50 saits/household_power/mr0.3/seed456
+DONE 05:07:12 saits/household_power/mr0.5/seed42
+DONE 05:10:36 saits/household_power/mr0.5/seed123
+DONE 05:14:04 saits/household_power/mr0.5/seed456
+DONE 05:15:26 tefn/household_power/mr0.1/seed42
+DONE 05:16:50 tefn/household_power/mr0.1/seed123
+DONE 05:17:52 tefn/household_power/mr0.1/seed456
+DONE 05:19:46 tefn/household_power/mr0.3/seed42
+DONE 05:22:07 tefn/household_power/mr0.3/seed123
+DONE 05:23:36 tefn/household_power/mr0.3/seed456
+DONE 05:25:05 tefn/household_power/mr0.5/seed42
+DONE 05:26:46 tefn/household_power/mr0.5/seed123
+DONE 05:28:50 tefn/household_power/mr0.5/seed456
+FAIL(1) 05:29:15 timemixerpp/household_power/mr0.1/seed42
+FAIL(1) 05:29:37 timemixerpp/household_power/mr0.1/seed123
+FAIL(1) 05:30:03 timemixerpp/household_power/mr0.1/seed456
+FAIL(1) 05:30:23 timemixerpp/household_power/mr0.3/seed42
+FAIL(1) 05:30:45 timemixerpp/household_power/mr0.3/seed123
+FAIL(1) 05:31:09 timemixerpp/household_power/mr0.3/seed456
+FAIL(1) 05:31:35 timemixerpp/household_power/mr0.5/seed42
+FAIL(1) 05:31:59 timemixerpp/household_power/mr0.5/seed123
+FAIL(1) 05:32:23 timemixerpp/household_power/mr0.5/seed456
+DONE 05:34:15 tslanet/household_power/mr0.1/seed42
+DONE 05:36:00 tslanet/household_power/mr0.1/seed123
+DONE 05:37:47 tslanet/household_power/mr0.1/seed456
+DONE 05:39:35 tslanet/household_power/mr0.3/seed42
+DONE 05:41:22 tslanet/household_power/mr0.3/seed123
+DONE 05:43:20 tslanet/household_power/mr0.3/seed456
+DONE 05:45:09 tslanet/household_power/mr0.5/seed42
+DONE 05:46:59 tslanet/household_power/mr0.5/seed123
+DONE 05:48:52 tslanet/household_power/mr0.5/seed456
+DONE 06:01:12 gpt4ts/household_power/mr0.1/seed42
+DONE 06:14:14 gpt4ts/household_power/mr0.1/seed123
+DONE 06:26:23 gpt4ts/household_power/mr0.1/seed456
+DONE 06:40:23 gpt4ts/household_power/mr0.3/seed42
+DONE 06:54:13 gpt4ts/household_power/mr0.3/seed123
+DONE 07:06:28 gpt4ts/household_power/mr0.3/seed456
+DONE 07:20:38 gpt4ts/household_power/mr0.5/seed42
+DONE 07:33:37 gpt4ts/household_power/mr0.5/seed123
+DONE 07:47:26 gpt4ts/household_power/mr0.5/seed456
+DONE 07:47:46 mean/appliances_energy/mr0.1/seed42
+DONE 07:47:54 mean/appliances_energy/mr0.1/seed123
+DONE 07:48:05 mean/appliances_energy/mr0.1/seed456
+DONE 07:48:14 mean/appliances_energy/mr0.3/seed42
+DONE 07:48:23 mean/appliances_energy/mr0.3/seed123
+DONE 07:48:31 mean/appliances_energy/mr0.3/seed456
+DONE 07:48:40 mean/appliances_energy/mr0.5/seed42
+DONE 07:48:49 mean/appliances_energy/mr0.5/seed123
+DONE 07:48:57 mean/appliances_energy/mr0.5/seed456
+DONE 07:49:08 median/appliances_energy/mr0.1/seed42
+DONE 07:49:15 median/appliances_energy/mr0.1/seed123
+DONE 07:49:24 median/appliances_energy/mr0.1/seed456
+DONE 07:49:31 median/appliances_energy/mr0.3/seed42
+DONE 07:49:41 median/appliances_energy/mr0.3/seed123
+DONE 07:49:50 median/appliances_energy/mr0.3/seed456
+DONE 07:49:58 median/appliances_energy/mr0.5/seed42
+DONE 07:50:07 median/appliances_energy/mr0.5/seed123
+DONE 07:50:15 median/appliances_energy/mr0.5/seed456
+DONE 07:50:22 locf/appliances_energy/mr0.1/seed42
+DONE 07:50:31 locf/appliances_energy/mr0.1/seed123
+DONE 07:50:40 locf/appliances_energy/mr0.1/seed456
+DONE 07:50:49 locf/appliances_energy/mr0.3/seed42
+DONE 07:50:58 locf/appliances_energy/mr0.3/seed123
+DONE 07:51:06 locf/appliances_energy/mr0.3/seed456
+DONE 07:51:14 locf/appliances_energy/mr0.5/seed42
+DONE 07:51:22 locf/appliances_energy/mr0.5/seed123
+DONE 07:51:30 locf/appliances_energy/mr0.5/seed456
+DONE 07:52:45 saits/appliances_energy/mr0.1/seed42
+DONE 07:54:04 saits/appliances_energy/mr0.1/seed123
+DONE 07:55:32 saits/appliances_energy/mr0.1/seed456
+DONE 07:56:56 saits/appliances_energy/mr0.3/seed42
+DONE 07:58:14 saits/appliances_energy/mr0.3/seed123
+DONE 07:59:55 saits/appliances_energy/mr0.3/seed456
+DONE 08:01:21 saits/appliances_energy/mr0.5/seed42
+DONE 08:02:53 saits/appliances_energy/mr0.5/seed123
+DONE 08:04:11 saits/appliances_energy/mr0.5/seed456
+DONE 08:05:03 tefn/appliances_energy/mr0.1/seed42
+DONE 08:05:55 tefn/appliances_energy/mr0.1/seed123
+DONE 08:06:40 tefn/appliances_energy/mr0.1/seed456
+DONE 08:07:26 tefn/appliances_energy/mr0.3/seed42
+DONE 08:08:30 tefn/appliances_energy/mr0.3/seed123
+DONE 08:09:23 tefn/appliances_energy/mr0.3/seed456
+DONE 08:10:09 tefn/appliances_energy/mr0.5/seed42
+DONE 08:10:57 tefn/appliances_energy/mr0.5/seed123
+DONE 08:11:52 tefn/appliances_energy/mr0.5/seed456
+FAIL(1) 08:12:05 timemixerpp/appliances_energy/mr0.1/seed42
+FAIL(1) 08:12:16 timemixerpp/appliances_energy/mr0.1/seed123
+FAIL(1) 08:12:27 timemixerpp/appliances_energy/mr0.1/seed456
+FAIL(1) 08:12:39 timemixerpp/appliances_energy/mr0.3/seed42
+FAIL(1) 08:12:51 timemixerpp/appliances_energy/mr0.3/seed123
+FAIL(1) 08:13:02 timemixerpp/appliances_energy/mr0.3/seed456
+FAIL(1) 08:13:15 timemixerpp/appliances_energy/mr0.5/seed42
+FAIL(1) 08:13:27 timemixerpp/appliances_energy/mr0.5/seed123
+FAIL(1) 08:13:38 timemixerpp/appliances_energy/mr0.5/seed456
+DONE 08:14:54 tslanet/appliances_energy/mr0.1/seed42
+DONE 08:16:18 tslanet/appliances_energy/mr0.1/seed123
+DONE 08:17:40 tslanet/appliances_energy/mr0.1/seed456
+DONE 08:19:09 tslanet/appliances_energy/mr0.3/seed42
+DONE 08:20:02 tslanet/appliances_energy/mr0.3/seed123
+DONE 08:21:14 tslanet/appliances_energy/mr0.3/seed456
+DONE 08:22:43 tslanet/appliances_energy/mr0.5/seed42
+DONE 08:24:28 tslanet/appliances_energy/mr0.5/seed123
+DONE 08:26:06 tslanet/appliances_energy/mr0.5/seed456
+DONE 08:30:17 gpt4ts/appliances_energy/mr0.1/seed42
+DONE 08:34:10 gpt4ts/appliances_energy/mr0.1/seed123
+DONE 08:38:32 gpt4ts/appliances_energy/mr0.1/seed456
+DONE 08:42:51 gpt4ts/appliances_energy/mr0.3/seed42
+DONE 08:46:49 gpt4ts/appliances_energy/mr0.3/seed123
+DONE 08:50:15 gpt4ts/appliances_energy/mr0.3/seed456
+DONE 08:53:45 gpt4ts/appliances_energy/mr0.5/seed42
+DONE 08:57:15 gpt4ts/appliances_energy/mr0.5/seed123
+DONE 09:00:38 gpt4ts/appliances_energy/mr0.5/seed456
+Lane GPU4 end 2026-06-04T09:00:38+09:00

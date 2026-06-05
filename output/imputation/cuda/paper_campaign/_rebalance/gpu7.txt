@@ -1,0 +1,5 @@
+gpt4ts citylearn_zone5 0.3 456 168 20
+gpt4ts citylearn_zone5 0.5 42 168 20
+gpt4ts citylearn_zone5 0.5 123 168 20
+gpt4ts citylearn_zone5 0.5 456 168 20
+gpt4ts solar 0.5 456 24 137

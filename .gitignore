@@ -1,41 +1,21 @@
-# ignore special files or folds
+# OS / editor junk
 *~
 .idea
 .DS_Store
 
-# ignore all building results
+# python build artifacts and caches
 dist
 build
-docs/_build
-*.egg-info‹
-*.out
-*.log
-
-# ignore all testing/running results
-.run
-.coverage
-.pytest_cache
+*.egg-info
+.eggs
 *__pycache__*
-*test*
+.pytest_cache
+.coverage
 
-# ignore specific kinds of files like all PDFs‹
-*.pdf
-*.ipynb
-*TODO*
-
-# ignore executable and config files‹
-#*.sh
-*.yml
-
-# to temporally ignore things under development locally, simply append '_indev' to the name of your workdir
-*_indev*
-
-output/
-datasets/
+# virtual environments and secrets (never commit)
 .venv/
+venv/
 .lightcc_codex_key*
 
-# generated analysis scripts and figures (not part of the library)
-analysis/
-# trained model checkpoints (too large for git)
-*.pypots
+# local in-development scratch dirs
+*_indev*
